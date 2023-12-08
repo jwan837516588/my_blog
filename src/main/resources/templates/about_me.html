@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!--navigator-->
+    <nav th:replace="_fragments :: menu(4)" class="ui inverted attached segment m-padded-tb-mini m-shadow">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui teal header item">Blog</h2>
+                <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+                <div class="m-item right item m-mobile-hide">
+                    <div class="ui inverted transparent input">
+                        <input type="text" placeholder="Search...">
+                        <i class="search link icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+
+    <!--body-->
+    <div class=".m-container m-padded-tb-big">
+        <div class="ui container">
+            <div class="ui stackable grid">
+                <div class="eleven wide column">
+                    <img src="https://unsplash.it/800/600?image=1005" alt="" class="ui rounded image">
+                </div>
+                <div class="five wide column">
+                    <div class="ui top attached segment">
+                        <div class="ui header">
+                            About Me
+                        </div>
+                    </div>
+
+                    <div class="ui attached segment">
+                        <p class="m-text">This is me</p>
+                    </div>
+                    <div class="ui attached segment">
+                        <div class="ui orange left pointing basic label">编程</div>
+                        <div class="ui orange left pointing basic label">写作</div>
+                        <div class="ui orange left pointing basic label">思考</div>
+                        <div class="ui orange left pointing basic label">运动</div>
+                    </div>
+                    <div class="ui attached segment">
+                        <div class="ui teal left pointing basic label">Java</div>
+                        <div class="ui teal left pointing basic label">JavaScript</div>
+                        <div class="ui teal left pointing basic label">Node</div>
+                        <div class="ui teal left pointing basic label">React</div>
+                        <div class="ui teal left pointing basic label">MySQL</div>
+                        <div class="ui teal left pointing basic label">...</div>
+                    </div>
+                    <div class="ui bottom attached segment">
+                        <a href="#" class="ui circular icon button"><i class="github icon"></i></a>
+                        <a href="#" class="ui linkedin circular icon button"
+                            data-content="linkedin.com/in/jared-wang-b88474270"><i class="linkedin icon"></i></a>
+                        <a href="#" class="ui wechat circular icon button"><i class="weixin icon"></i></a>
+                        <a href="#" class="ui circular icon button"><i class="facebook icon"></i></a>
+                    </div>
+
+                    <div class="ui wechat-qr flowing popup transition hidden">
+                        <img src="../static/images/my_wehcat_white.jpg" th:src="@{/images/my_wehcat_white.jpg}" alt="" class="ui rounded image"
+                            style="width: 120px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--footer-->
+    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+        <div class="ui center aligned container">
+            <div class="ui inverted divided stackable grid">
+                <div class="three wide column">
+                    <div class="ui inverted link list">
+                        <div class="item">
+                            <img src="../static/images/my_wechat.jpg" th:src="@{/images/my_wechat.jpg}" class="ui rounded image" alt="My WeChat"
+                                style="width: 110px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header m-thin-text m-text-space">
+                        Latest Blog
+                    </h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">User Story</a>
+                        <a href="#" class="item">User Story</a>
+                        <a href="#" class="item">User Story</a>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header m-thin-text m-text-space">
+                        Contact Info
+                    </h4>
+                    <div class="ui inverted link list">
+                        <i class="item bordered linkedin icon">&nbsp;LinkedIn:&nbsp;</i>
+                        <a href="#" class="item">
+                            linkedin.com/in/jared-wang-b88474270
+                        </a>
+                        <i class="item bordered envelope icon">&nbsp;Email:&nbsp;</i>
+                        <a href="#" class="item">
+                            jwan308@aucklanduni.ac.nz
+                        </a>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header m-thin-text m-text-space">
+                        Me
+                    </h4>
+                    <p class="m-thin-text m-text-space m-text-line-height m-opacity">This is my blog</p>
+                </div>
+            </div>
+            <div class="ui inverted section divider">
+                <p class="m-thin-text m-text-space m-text-line-height m-opacity">
+                    Copyright © 2023 Jared Wang. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+
+    <script>
+        $('.menu.toggle').click(function () {
+            $('.m-item').toggleClass('m-mobile-hide');
+        }
+        );
+
+        $('.wechat').popup(
+            {
+                popup: $('.wechat-qr'),
+                on: 'hover',
+                position: 'bottom center'
+            }
+        )
+            ;
+
+        $('.linkedin').popup(
+            {
+                on:'click',
+                position:'bottom center'
+            }
+        );
+    </script>
+</body>
+
+</html>

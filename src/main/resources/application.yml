@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: dev
+
+
+  thymeleaf:
+    servlet:
+      content-type: text/html
+    mode: HTML
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/my_blog_db?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
+logging:
+  level:
+    root: info
+    com.example.my_blog: debug
+  file:
+    path: log/blog.log
+
+server:
+  port: 8080

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!--navigator-->
+    <nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui teal header item">Blog</h2>
+                <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+                <div class="m-item right item m-mobile-hide">
+                    <div class="ui inverted transparent input">
+                        <input type="text" placeholder="Search...">
+                        <i class="search link icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+
+    <!--body-->
+    <div class=".m-container m-padded-tb-big">
+        <div class="ui container">
+            <div class="ui stackable grid">
+                <!-- left side -->
+                <div class="eleven wide column">
+                    <!-- header -->
+                    <div class="ui top attached segment">
+                        <div class="ui middle aligned two column grid">
+                            <div class="column">
+                                <h3 class="ui teal header">Blog</h3>
+                            </div>
+                            <div class="right aligned column m-opacity">
+                                <h3 class="ui orange header m-inline-block m-thin-text">
+                                    4
+                                </h3>
+                                &nbsp;posts in total
+                            </div>
+                        </div>
+                    </div>
+                    <!-- body -->
+                    <div class="ui attached segment">
+
+                        <div class="ui padded vertical segment m-padded-tb-large">
+                            <div class="ui mobile reversed stackable grid">
+                                <div class="eleven wide column">
+                                    <h3 class="ui header">心灵鸡汤</h3>
+                                    <p class="m-thin-text m-text-space m-text-line-height">
+                                        在生命的舞台上，每一天都是一次珍贵的表演。忘记昨日的烦恼，抬头望向明天的阳光。像向阳植物一样，让心灵在阳光下舒展。不必追逐繁星，拥抱内心的宁静。生活如诗，平凡中蕴含着美好。每一刻都是收获，每一步都是成长。相信自己，勇敢前行，因为你的内心是最美的风景。
+                                    </p>
+                                    <div class="ui stackable grid">
+                                        <div class="eleven wide column">
+                                            <div class="ui mini horizontal link list">
+                                                <div class="item">
+                                                    <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                        class="ui avatar image">
+                                                    <div class="content"><a href="#" class="header">wjr</a></div>
+                                                </div>
+                                                <div class="item">
+                                                    <i class="calendar icon"></i> 2023-11-29
+                                                </div>
+                                                <div class="item">
+                                                    <i class="eye icon"></i> 1000
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right aligned five wide column">
+                                            <a href="" target="_blank"
+                                                class="ui teal basic label m-padded-tiny m-thin-text">认知升级</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="five wide column">
+                                    <a href="#" target="_blank">
+                                        <img src="https://unsplash.it/800/450?image=1005" alt=""
+                                            class="ui rounded image">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui padded vertical segment m-padded-tb-large">
+                            <div class="ui mobile reversed stackable grid">
+                                <div class="eleven wide column">
+                                    <h3 class="ui header">心灵鸡汤</h3>
+                                    <p class="m-thin-text m-text-space m-text-line-height">
+                                        在生命的舞台上，每一天都是一次珍贵的表演。忘记昨日的烦恼，抬头望向明天的阳光。像向阳植物一样，让心灵在阳光下舒展。不必追逐繁星，拥抱内心的宁静。生活如诗，平凡中蕴含着美好。每一刻都是收获，每一步都是成长。相信自己，勇敢前行，因为你的内心是最美的风景。
+                                    </p>
+                                    <div class="ui stackable grid">
+                                        <div class="eleven wide column">
+                                            <div class="ui mini horizontal link list">
+                                                <div class="item">
+                                                    <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                        class="ui avatar image">
+                                                    <div class="content"><a href="#" class="header">wjr</a></div>
+                                                </div>
+                                                <div class="item">
+                                                    <i class="calendar icon"></i> 2023-11-29
+                                                </div>
+                                                <div class="item">
+                                                    <i class="eye icon"></i> 1000
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right aligned five wide column">
+                                            <a href="" target="_blank"
+                                                class="ui teal basic label m-padded-tiny m-thin-text">认知升级</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="five wide column">
+                                    <a href="#" target="_blank">
+                                        <img src="https://unsplash.it/800/450?image=1005" alt=""
+                                            class="ui rounded image">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui padded vertical segment m-padded-tb-large">
+                            <div class="ui mobile reversed stackable grid">
+                                <div class="eleven wide column">
+                                    <h3 class="ui header">心灵鸡汤</h3>
+                                    <p class="m-thin-text m-text-space m-text-line-height">
+                                        在生命的舞台上，每一天都是一次珍贵的表演。忘记昨日的烦恼，抬头望向明天的阳光。像向阳植物一样，让心灵在阳光下舒展。不必追逐繁星，拥抱内心的宁静。生活如诗，平凡中蕴含着美好。每一刻都是收获，每一步都是成长。相信自己，勇敢前行，因为你的内心是最美的风景。
+                                    </p>
+                                    <div class="ui stackable grid">
+                                        <div class="eleven wide column">
+                                            <div class="ui mini horizontal link list">
+                                                <div class="item">
+                                                    <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                        class="ui avatar image">
+                                                    <div class="content"><a href="#" class="header">wjr</a></div>
+                                                </div>
+                                                <div class="item">
+                                                    <i class="calendar icon"></i> 2023-11-29
+                                                </div>
+                                                <div class="item">
+                                                    <i class="eye icon"></i> 1000
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right aligned five wide column">
+                                            <a href="" target="_blank"
+                                                class="ui teal basic label m-padded-tiny m-thin-text">认知升级</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="five wide column">
+                                    <a href="#" target="_blank">
+                                        <img src="https://unsplash.it/800/450?image=1005" alt=""
+                                            class="ui rounded image">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui padded vertical segment m-padded-tb-large">
+                            <div class="ui mobile reversed stackable grid">
+                                <div class="eleven wide column">
+                                    <h3 class="ui header">心灵鸡汤</h3>
+                                    <p class="m-thin-text m-text-space m-text-line-height">
+                                        在生命的舞台上，每一天都是一次珍贵的表演。忘记昨日的烦恼，抬头望向明天的阳光。像向阳植物一样，让心灵在阳光下舒展。不必追逐繁星，拥抱内心的宁静。生活如诗，平凡中蕴含着美好。每一刻都是收获，每一步都是成长。相信自己，勇敢前行，因为你的内心是最美的风景。
+                                    </p>
+                                    <div class="ui stackable grid">
+                                        <div class="eleven wide column">
+                                            <div class="ui mini horizontal link list">
+                                                <div class="item">
+                                                    <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                        class="ui avatar image">
+                                                    <div class="content"><a href="#" class="header">wjr</a></div>
+                                                </div>
+                                                <div class="item">
+                                                    <i class="calendar icon"></i> 2023-11-29
+                                                </div>
+                                                <div class="item">
+                                                    <i class="eye icon"></i> 1000
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="right aligned five wide column">
+                                            <a href="" target="_blank"
+                                                class="ui teal basic label m-padded-tiny m-thin-text">认知升级</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="five wide column">
+                                    <a href="#" target="_blank">
+                                        <img src="https://unsplash.it/800/450?image=1005" alt=""
+                                            class="ui rounded image">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- bottom -->
+                    <div class="ui bottom attached segment">
+                        <div class="ui middle aligned two column grid">
+                            <div class="column">
+                                <a href="#" class="ui teal basic mini button">上一页</a>
+                            </div>
+                            <div class="right aligned column">
+                                <a href="#" class="ui teal basic mini button">下一页</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- right side -->
+                <!-- top -->
+                <div class="five wide column">
+                    <div class="ui segments">
+                        <div class="ui secondary segment">
+                            <div class="ui two column grid">
+                                <div class="column">
+                                    <i class="idea icon"></i> 分类
+                                </div>
+                                <div class="right aligned column">
+                                    <a href="#" target="_blank">more <i class="angle double right icon"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui teal segment">
+                            <div class="ui fluid vertical menu">
+                                <a href="#" class="item">
+                                    学习日志
+                                    <div class="ui teal basic left pointing label">13</div>
+                                </a>
+                                <a href="#" class="item">
+                                    学习日志
+                                    <div class="ui teal basic left pointing label">13</div>
+                                </a>
+                                <a href="#" class="item">
+                                    学习日志
+                                    <div class="ui teal basic left pointing label">13</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- label -->
+                    <div class="ui segments">
+                        <div class="ui secondary segment">
+                            <div class="ui two column grid">
+                                <div class="column">
+                                    <i class="tags icon"></i> 标签
+                                </div>
+                                <div class="right aligned column">
+                                    <a href="#" target="_blank">more <i class="angle double right icon"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui teal segment">
+                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tiny">方法论
+                                <div class="detail">23</div>
+                            </a>
+                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tiny">方法论
+                                <div class="detail">23</div>
+                            </a>
+                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tiny">方法论
+                                <div class="detail">23</div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- recommend -->
+                    <div class="ui segments">
+                        <div class="ui secondary segment">
+                            <i class="bookmark icon"></i> 最新推荐
+                        </div>
+
+                        <div class="ui segment">
+                            <a href="#" class="m-black m-thin-text">User Story</a>
+                        </div>
+                        <div class="ui segment">
+                            <a href="#" class="m-black m-thin-text">User Story</a>
+                        </div>
+                        <div class="ui segment">
+                            <a href="#" class="m-black m-thin-text">User Story</a>
+                        </div>
+                    </div>
+
+                    <!-- QR code -->
+                    <div class="ui horizontal divider header m-margin-top-large">扫码关注我</div>
+                    <div class="ui centered card" style="width: 11em">
+                        <img src="../static/images/my_wehcat_white.jpg" th:src="@{/images/my_wehcat_white.jpg}" class="ui rounded image" alt="My WeChat">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+    <!--footer-->
+    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+        <div class="ui center aligned container">
+            <div class="ui inverted divided stackable grid">
+                <div class="three wide column">
+                    <div class="ui inverted link list">
+                        <div class="item">
+                            <img src="../static/images/my_wechat.jpg" th:src="@{/images/my_wechat.jpg}" class="ui rounded image" alt="My WeChat"
+                                style="width: 110px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header m-thin-text m-text-space">
+                        Latest Blog
+                    </h4>
+                    <div class="ui inverted link list">
+                        <a href="#" class="item">User Story</a>
+                        <a href="#" class="item">User Story</a>
+                        <a href="#" class="item">User Story</a>
+                    </div>
+                </div>
+                <div class="three wide column">
+                    <h4 class="ui inverted header m-thin-text m-text-space">
+                        Contact Info
+                    </h4>
+                    <div class="ui inverted link list">
+                        <i class="item bordered linkedin icon">&nbsp;LinkedIn:&nbsp;</i>
+                        <a href="#" class="item">
+                            linkedin.com/in/jared-wang-b88474270
+                        </a>
+                        <i class="item bordered envelope icon">&nbsp;Email:&nbsp;</i>
+                        <a href="#" class="item">
+                            jwan308@aucklanduni.ac.nz
+                        </a>
+                    </div>
+                </div>
+                <div class="seven wide column">
+                    <h4 class="ui inverted header m-thin-text m-text-space">
+                        Me
+                    </h4>
+                    <p class="m-thin-text m-text-space m-text-line-height m-opacity">This is my blog</p>
+                </div>
+            </div>
+            <div class="ui inverted section divider">
+                <p class="m-thin-text m-text-space m-text-line-height m-opacity">
+                    Copyright © 2023 Jared Wang. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+
+    <script>
+        $('.menu.toggle').click(function () {
+            $('.m-item').toggleClass('m-mobile-hide');
+        }
+        );
+    </script>
+</body>
+
+</html>
