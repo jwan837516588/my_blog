@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">Console</h2>
+            <a href="#" th:href="@{/admin/post}" class="m-item item m-mobile-hide" th:classappend="${n==0} ? 'active'"><i class="home icon"></i>Dashboard</a>
+            <a href="#" th:href="@{/admin/categories}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="idea icon"></i>Categories</a>
+            <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="tags icon"></i>Tags</a>
+            <div class="m-item right item m-mobile-hide">
+                <div class="ui inverted transparent input">
+                    <input type="text" placeholder="Search...">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+</body>
+</html>
+
+</body>
+</html>

@@ -10,7 +10,7 @@ import java.util.List;
 public class Type {
     @Id
     @GeneratedValue
-    private long typeId;
+    private Long typeId;
     private String name;
 
     @OneToMany(mappedBy = "type")
@@ -20,7 +20,7 @@ public class Type {
 
     }
 
-    public Type(long typeId, String name) {
+    public Type(Long typeId, String name) {
         this.typeId = typeId;
         this.name = name;
     }
@@ -33,11 +33,11 @@ public class Type {
         this.name = name;
     }
 
-    public long getTypeId() {
+    public Long getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(long typeId) {
+    public void setTypeId(Long typeId) {
         this.typeId = typeId;
     }
 

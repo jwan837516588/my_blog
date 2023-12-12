@@ -61,6 +61,11 @@ body {
     margin: auto !important;
 }
 
+.m-container-large {
+    max-width: 80em !important;
+    margin: auto !important;
+}
+
 /* text */
 .m-text {
     font-weight: 300 !important;
