@@ -1,16 +1,18 @@
 package com.example.my_blog.entity;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Entity
 @Table(name = "t_type")
 public class Type {
     @Id
     @GeneratedValue
     private Long typeId;
+
+    @NotNull
     private String name;
 
     @OneToMany(mappedBy = "type")

@@ -16,7 +16,7 @@
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">Console</h2>
-            <a href="#" th:href="@{/admin/list}" class="m-item item m-mobile-hide"><i class="home icon"></i>Dashboard</a>
+            <a href="#" th:href="@{/admin/blog/list}" class="m-item item m-mobile-hide"><i class="home icon"></i>Dashboard</a>
             <a href="#" th:href="@{/admin/categories}" class="m-item item m-mobile-hide"><i class="idea icon"></i>Categories</a>
             <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tags</a>
             <div class="right m-item m-mobile-hide menu">
@@ -48,6 +48,11 @@
 <!--body-->
 <div class=".m-container m-padded-tb-big">
     <div class="ui container">
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">Successful</div>
+            <p th:text="${message}">Operation success!</p>
+        </div>
         <table class="ui celled table">
             <thead>
             <tr>
@@ -61,8 +66,8 @@
                 <td th:text="${iterStat.count}"></td>
                 <td th:text="${type.name}"></td>
                 <td>
-                    <a href="#" th:href="@{/admin/categories/{typeId}/input(id=${type.typeId})}" class="ui small teal basic button">edit</a>
-                    <a href="#" th:href="@{/admin/categories/{typeId}/delete(id=${type.typeId})}" class="ui small red basic button">delete</a>
+                    <a href="#" th:href="@{/admin/categories/input/{id}(id=${type.typeId})}" class="ui small teal basic button">edit</a>
+                    <a href="#" th:href="@{/admin/categories/delete/{id}(id=${type.typeId})}" class="ui small red basic button">delete</a>
                 </td>
             </tr>
             </tbody>

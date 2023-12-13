@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HandleErrorController {
+public class HomepageController {
     //    @RequestMapping (value = "/", method = RequestMethod.GET)
     @GetMapping("/index")
     public String handleError() {

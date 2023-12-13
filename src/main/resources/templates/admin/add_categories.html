@@ -7,7 +7,8 @@
     <title>Add Category</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
-    <link rel="stylesheet" href="../../static/lib/editor_md/css/editormd.min.css" th:href="@{/lib/editor_md/css/editormd.min.css}">
+    <link rel="stylesheet" href="../../static/lib/editor_md/css/editormd.min.css"
+          th:href="@{/lib/editor_md/css/editormd.min.css}">
 </head>
 
 <body>
@@ -17,7 +18,8 @@
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">Console</h2>
-            <a href="#" th:href="@{/admin/list}" class="m-item item m-mobile-hide"><i class="home icon"></i>Dashboard</a>
+            <a href="#" th:href="@{/admin/blog/list}" class="m-item item m-mobile-hide"><i
+                    class="home icon"></i>Dashboard</a>
             <a href="#" th:href="@{/admin/categories}" class="m-item item m-mobile-hide"><i class="idea icon"></i>Categories</a>
             <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tags</a>
             <div class="right m-item m-mobile-hide menu">
@@ -48,15 +50,17 @@
 <br>
 <br>
 <br>
+<br>
 <!--body-->
 <div class=".m-container m-padded-tb-massive">
     <div class="ui text container">
-        <form action="#" method="post" th:action="@{/admin/categories}" class="ui form">
-
-            <div class="field">
+        <form action="#" method="post" th:action="*{typeId}==null ? @{/admin/categories} : @{/admin/categories/edit}"
+              th:object="${type}" class="ui form">
+            <input type="hidden" name="typeId" th:value="*{typeId}">
+            <div class="required field">
                 <div class="ui left labeled action input">
                     <label class="ui teal basic label">Category Name</label>
-                    <input type="text" name="name" placeholder="Type here...">
+                    <input type="text" name="name" placeholder="Type here..." th:value="*{name}">
                     <button class="ui teal right labeled icon button">
                         <i class="add icon"></i>
                         Add
@@ -65,12 +69,22 @@
             </div>
 
             <div class="ui error message"></div>
+
+            <!--/*/
+            <div class="ui negative message" th:if="${#fields.hasErrors('name')}">
+                <i class="close icon"></i>
+                <div class="header">Operation Failed</div>
+                <p th:errors="*{name}">Operation is illegal</p>
+            </div>
+             /*/-->
             <br>
             <br>
         </form>
     </div>
 </div>
 
+<br>
+<br>
 <br>
 <br>
 
@@ -144,10 +158,10 @@
     $('.ui.form').form({
             fields: {
                 title: {
-                    identifier: 'title',
+                    identifier: 'name',
                     rules: [{
                         type: 'empty',
-                        prompt: 'Please fill the title'
+                        prompt: 'Name cannot be empty'
                     }],
 
                 }

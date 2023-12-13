@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,14 +20,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Transactional
     @Override
-    public void saveCategory(Type type) {
-        categoryRepository.save(type);
+    public Type saveCategory(Type type) {
+        return categoryRepository.save(type);
     }
 
     @Transactional
     @Override
-    public void deleteCategory(Type type) {
-        categoryRepository.delete(type);
+    public void deleteCategoryById(Long id) {
+        categoryRepository.deleteById(id);
     }
 
     @Override
@@ -36,13 +37,27 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Type queryCategoryById(Long typeId) {
+        return categoryRepository.findById(typeId).orElse(null);
+    }
+
+    @Override
     public Page<Type> queryCategory(Pageable pageableType) {
         return categoryRepository.findAll(pageableType);
     }
 
-    @Transactional
     @Override
-    public void updateCategory(Type type) {
-        categoryRepository.findOne(Example.of(type)).ifPresent(e -> e.setName(type.getName()));
+    public long countCategory(Type type) {
+        return categoryRepository.count(Example.of(type));
+    }
+
+    @Override
+    public Type queryCategoryByName(String name) {
+        return categoryRepository.findByName(name);
+    }
+
+    @Override
+    public List<Type> findAllCategories() {
+        return categoryRepository.findAll();
     }
 }
