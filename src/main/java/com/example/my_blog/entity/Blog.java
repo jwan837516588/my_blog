@@ -12,8 +12,10 @@ public class Blog {
 
     @Id
     @GeneratedValue
-    private long blogId;
+    private Long blogId;
     private String title;
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition="TEXT")
     private String content;
     private String profile;
     private String flag;
@@ -34,10 +36,13 @@ public class Blog {
     @ManyToOne
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @Transient
+    private String tagIds;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Tag> tags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "blog")
+    @OneToMany(mappedBy = "blog", fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
 
 
@@ -45,7 +50,7 @@ public class Blog {
 
     }
 
-    public Blog(long blogId, String title, String content, String profile, String flag, Integer numOfViews, boolean donationSwitch, boolean copyrightSwitch, boolean commentSwitch, boolean publish, boolean recommendSwitch, Date createTime, Date updateTime) {
+    public Blog(Long blogId, String title, String content, String profile, String flag, Integer numOfViews, boolean donationSwitch, boolean copyrightSwitch, boolean commentSwitch, boolean publish, boolean recommendSwitch, Date createTime, Date updateTime) {
         this.blogId = blogId;
         this.title = title;
         this.content = content;
@@ -62,11 +67,11 @@ public class Blog {
     }
 
 
-    public long getBlogId() {
+    public Long getBlogId() {
         return blogId;
     }
 
-    public void setBlogId(long blogId) {
+    public void setBlogId(Long blogId) {
         this.blogId = blogId;
     }
 
@@ -196,6 +201,14 @@ public class Blog {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(String tagIds) {
+        this.tagIds = tagIds;
     }
 
     @Override

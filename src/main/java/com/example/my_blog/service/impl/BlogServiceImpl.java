@@ -12,8 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,11 +23,23 @@ public class BlogServiceImpl implements BlogService {
     @Resource
     private BlogRepository blogRepository;
     @Override
+    @Transactional
     public Blog saveBlog(Blog blog) {
+        if (blog.getBlogId() == null) {
+            blog.setCreateTime(new Date());
+            blog.setNumOfViews(0);
+        }
+        else {
+            Blog b = queryBlogById(blog.getBlogId());
+            blog.setNumOfViews(b.getNumOfViews());
+            blog.setCreateTime(b.getCreateTime());
+        }
+        blog.setUpdateTime(new Date());
         return blogRepository.save(blog);
     }
 
     @Override
+    @Transactional
     public void deleteBlogById(Long id) {
         blogRepository.deleteById(id);
     }

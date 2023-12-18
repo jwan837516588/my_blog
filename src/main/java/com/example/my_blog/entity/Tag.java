@@ -10,26 +10,26 @@ import java.util.List;
 public class Tag {
     @Id
     @GeneratedValue
-    private long tagId;
+    private Long tagId;
     private String name;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
     private List<Blog> blogs = new ArrayList<>();
 
     public Tag() {
 
     }
 
-    public Tag(long tagId, String name) {
+    public Tag(Long tagId, String name) {
         this.tagId = tagId;
         this.name = name;
     }
 
-    public long getTagId() {
+    public Long getTagId() {
         return tagId;
     }
 
-    public void setTagId(long tagId) {
+    public void setTagId(Long tagId) {
         this.tagId = tagId;
     }
 

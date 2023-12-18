@@ -19,7 +19,7 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Blog blog;
 
     // 当前Comment类作为one时，reply comments是many，

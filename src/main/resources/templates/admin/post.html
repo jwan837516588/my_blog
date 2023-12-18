@@ -7,269 +7,311 @@
     <title>Post</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
-    <link rel="stylesheet" href="../../static/lib/editor_md/css/editormd.min.css" th:href="@{/lib/editor_md/css/editormd.min.css}">
+    <link rel="stylesheet" href="../../static/lib/editor_md/css/editormd.min.css"
+          th:href="@{/lib/editor_md/css/editormd.min.css}">
 </head>
 
 <body>
 
-    <!--navigator-->
-    <nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow">
-        <div class="ui container">
-            <div class="ui inverted secondary stackable menu">
-                <h2 class="ui teal header item">Console</h2>
-                <a href="#" th:href="@{/admin/blog/list}" class="m-item item m-mobile-hide"><i class="home icon"></i>Dashboard</a>
-                <a href="#" th:href="@{/admin/categories}" class="m-item item m-mobile-hide"><i class="idea icon"></i>Categories</a>
-                <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tags</a>
-                <div class="right m-item m-mobile-hide menu">
-                    <div class="ui dropdown item">
-                        <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                        Jared Wang
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <a href="" class="item">注销</a>
-                        </div>
+<!--navigator-->
+<nav th:replace="admin/_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">Console</h2>
+            <a href="#" th:href="@{/admin/blog/list}" class="m-item item m-mobile-hide"><i class="home icon"></i>Dashboard</a>
+            <a href="#" th:href="@{/admin/categories}" class="m-item item m-mobile-hide"><i class="idea icon"></i>Categories</a>
+            <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tags</a>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
+                    Jared Wang
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="" class="item">注销</a>
                     </div>
                 </div>
             </div>
         </div>
-        <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
-            <i class="sidebar icon"></i>
-        </a>
-    </nav>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
 
-    <div class="ui right attached pointing menu">
-        <div class="ui container">
-            <div class="right menu">
-                <a href="./post" class="teal active item">New Post</a>
-                <a href="./list" class="item">History</a>
-            </div>
+<div class="ui right attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="./post" th:href="@{post}" class="teal active item">New Post</a>
+            <a href="./list" th:href="@{list}" class="item">History</a>
         </div>
     </div>
+</div>
 
-    <!--body-->
-    <div class=".m-container m-padded-tb-big">
-        <div class="ui container">
-            <form action="#" method="post" class="ui form">
+<!--body-->
+<div class=".m-container m-padded-tb-big">
+    <div class="ui container">
+        <form id="blog_form" action="#" th:object="${blog}" th:action="@{/admin/blog/post}" method="post"
+              class="ui form">
+            <input type="hidden" name="publish">
+            <input type="hidden" name="blogId" th:value="*{blogId}">
+            <div class="required field">
+                <div class="ui left labeled input">
+                    <div class="ui selection compact teal basic dropdown label">
+                        <input type="hidden" value="Creating" name="flag" th:value="*{flag==null}?'Creating':*{flag}">
+                        <i class="dropdown icon"></i>
+                        <div class="text">Creating</div>
+
+                        <div class="menu">
+                            <div class="item">Creating</div>
+                            <div class="item">Reposting</div>
+                            <div class="item">Transating</div>
+                        </div>
+                    </div>
+                    <input type="text" name="title" placeholder="Title" th:value="*{title}">
+                </div>
+            </div>
+
+            <div class="required field">
+                <div id="md-content" style="z-index: 1 !important;">
+                    <textarea name="content" th:text="*{content}" placeholder="You can write your blog here..."
+                              style="display: none"></textarea>
+                </div>
+            </div>
+
+            <div class="two fields">
                 <div class="required field">
-                    <div class="ui left labeled input">
-                        <div class="ui selection compact teal basic dropdown label">
-                            <input type="hidden" value="原创">
+                    <div class="ui left labeled action input">
+                        <label class="ui compact teal basic label">Categories</label>
+                        <div class="ui fluid selection dropdown">
+                            <input type="hidden" name="type.typeId" th:value="*{type != null} ? *{type.typeId}:''">
                             <i class="dropdown icon"></i>
-                            <div class="text">Creating</div>
+                            <div class="default text">Category</div>
 
                             <div class="menu">
-                                <div class="item">Creating</div>
-                                <div class="item">Reposting</div>
-                                <div class="item">Transating</div>
-                            </div>
-                        </div>
-                        <input type="text" name="title" placeholder="Title">
-                    </div>
-                </div>
-
-                <div class="field">
-                    <div id="md-content" style="z-index: 1 !important;">
-                        <textarea name="content" placeholder="You can write your blog here..." style="display: none">[TOC]
-                        #### Disabled options
-                        
-- TeX (Based on KaTeX);
-- Emoji;
-- Task lists;
-- HTML tags decode;
-- Flowchart and Sequence Diagram;
-                        </textarea>
-                    </div>
-                </div>
-
-                <div class="two fields">
-                    <div class="field">
-                        <div class="ui left labeled action input">
-                            <label class="ui compact teal basic label">Categories</label>
-                            <div class="ui fluid selection dropdown">
-                                <input type="hidden" name="category">
-                                <i class="dropdown icon"></i>
-                                <div class="default text">Category</div>
-
-                                <div class="menu">
-                                    <div class="item">错误日志</div>
-                                    <div class="item">开发者手册</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui left labeled action input">
-                            <label class="ui compact teal basic label">Tags</label>
-                            <div class="ui selection fluid multiple search dropdown">
-                                <input type="hidden" name="tag">
-                                <i class="dropdown icon"></i>
-                                <div class="default text">Tag</div>
-
-                                <div class="menu">
-                                    <div class="item" d>Java</div>
-                                    <div class="item">JavaScript</div>
-                                </div>
+                                <div th:each="type : ${types}" class="item"
+                                     th:data-value="${type.typeId}" th:text="${type.name}"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="field">
-                    <div class="ui left labeled input">
-                        <label class="ui teal basic label">Profile</label>
-                        <input type="text" name="indexPicture" placeholder="Profile URL">
-                    </div>
-                </div>
-                <div class="inline fields">
-                    <div class="two wide field">
-                        <div class="ui toggle checkbox" style="z-index: 0 !important;">
-                            <input type="checkbox" id="recommend" name="recommend">
-                            <label for="recommend" class="hidden">
-                                Recommend
-                            </label>
-                        </div>
-                    </div>
-                    <div class="two wide field">
-                        <div class="ui toggle checkbox" style="z-index: 0 !important;">
-                            <input type="checkbox" id="repost" name="repost">
-                            <label for="repost" class="hidden">
-                                Repost
-                            </label>
-                        </div>
-                    </div>
-                    <div class="two wide field">
-                        <div class="ui toggle checkbox" style="z-index: 0 !important;">
-                            <input type="checkbox" id="donation" name="donation">
-                            <label for="donation" class="hidden">
-                                Donation
-                            </label>
-                        </div>
-                    </div>
-                    <div class="two wide field">
-                        <div class="ui toggle checkbox" style="z-index: 0 !important;">
-                            <input type="checkbox" id="comment" name="comment">
-                            <label for="comment" class="hidden">
-                                Comment
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                    <div class="ui left labeled action input">
+                        <label class="ui compact teal basic label">Tags</label>
+                        <div class="ui selection fluid multiple search dropdown">
+                            <input type="hidden" name="tagIds" th:value="*{tagIds}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Tag</div>
 
-                <div class="ui error message"></div>
-                <br>
-                <br>
-                <div class="ui center aligned container">
-                    <button type="button" class="ui button" onclick="window.history.go(-1)">Redo</button>
-                    <button class="ui secondary button">Save</button>
-                    <button class="ui teal button">Submit</button>
+                            <div class="menu">
+                                <div th:each="tag : ${tags}" class="item"
+                                     th:data-value="${tag.tagId}" th:text="${tag.name}"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </form>
+            </div>
+            <div class="required field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">Profile</label>
+                    <input type="text" name="profile" th:value="*{profile}" placeholder="Profile URL">
+                </div>
+            </div>
+            <div class="inline fields">
+                <div class="two wide field">
+                    <div class="ui toggle checkbox" style="z-index: 0 !important;">
+                        <input type="checkbox" id="recommend" name="recommendSwitch" th:checked="*{recommendSwitch}">
+                        <label for="recommend" class="hidden">
+                            Recommend
+                        </label>
+                    </div>
+                </div>
+                <div class="two wide field">
+                    <div class="ui toggle checkbox" style="z-index: 0 !important;">
+                        <input type="checkbox" id="repost" name="copyrightSwitch" th:checked="*{copyrightSwitch}">
+                        <label for="repost" class="hidden">
+                            Repost
+                        </label>
+                    </div>
+                </div>
+                <div class="two wide field">
+                    <div class="ui toggle checkbox" style="z-index: 0 !important;">
+                        <input type="checkbox" id="donation" name="donationSwitch" th:checked="*{donationSwitch}">
+                        <label for="donation" class="hidden">
+                            Donation
+                        </label>
+                    </div>
+                </div>
+                <div class="two wide field">
+                    <div class="ui toggle checkbox" style="z-index: 0 !important;">
+                        <input type="checkbox" id="comment" name="commentSwitch" th:checked="*{commentSwitch}">
+                        <label for="comment" class="hidden">
+                            Comment
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui error message"></div>
+            <br>
+            <br>
+            <div class="ui center aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">Redo</button>
+                <button id="save_btn" type="button" class="ui secondary button">Save</button>
+                <button id="publish_btn" type="button" class="ui teal button">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--footer-->
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../../static/images/my_wechat.jpg" class="ui rounded image" alt="My WeChat"
+                             style="width: 110px;">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-thin-text m-text-space">
+                    Latest Blog
+                </h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">User Story</a>
+                    <a href="#" class="item">User Story</a>
+                    <a href="#" class="item">User Story</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-thin-text m-text-space">
+                    Contact Info
+                </h4>
+                <div class="ui inverted link list">
+                    <i class="item bordered linkedin icon">&nbsp;LinkedIn:&nbsp;</i>
+                    <a href="#" class="item">
+                        linkedin.com/in/jared-wang-b88474270
+                    </a>
+                    <i class="item bordered envelope icon">&nbsp;Email:&nbsp;</i>
+                    <a href="#" class="item">
+                        jwan308@aucklanduni.ac.nz
+                    </a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-thin-text m-text-space">
+                    Me
+                </h4>
+                <p class="m-thin-text m-text-space m-text-line-height m-opacity">This is my blog</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider">
+            <p class="m-thin-text m-text-space m-text-line-height m-opacity">
+                Copyright © 2023 Jared Wang. All rights reserved.
+            </p>
         </div>
     </div>
+</footer>
 
-    <!--footer-->
-    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
-        <div class="ui center aligned container">
-            <div class="ui inverted divided stackable grid">
-                <div class="three wide column">
-                    <div class="ui inverted link list">
-                        <div class="item">
-                            <img src="../../static/images/my_wechat.jpg" class="ui rounded image" alt="My WeChat"
-                                style="width: 110px;">
-                        </div>
-                    </div>
-                </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header m-thin-text m-text-space">
-                        Latest Blog
-                    </h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">User Story</a>
-                        <a href="#" class="item">User Story</a>
-                        <a href="#" class="item">User Story</a>
-                    </div>
-                </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header m-thin-text m-text-space">
-                        Contact Info
-                    </h4>
-                    <div class="ui inverted link list">
-                        <i class="item bordered linkedin icon">&nbsp;LinkedIn:&nbsp;</i>
-                        <a href="#" class="item">
-                            linkedin.com/in/jared-wang-b88474270
-                        </a>
-                        <i class="item bordered envelope icon">&nbsp;Email:&nbsp;</i>
-                        <a href="#" class="item">
-                            jwan308@aucklanduni.ac.nz
-                        </a>
-                    </div>
-                </div>
-                <div class="seven wide column">
-                    <h4 class="ui inverted header m-thin-text m-text-space">
-                        Me
-                    </h4>
-                    <p class="m-thin-text m-text-space m-text-line-height m-opacity">This is my blog</p>
-                </div>
-            </div>
-            <div class="ui inverted section divider">
-                <p class="m-thin-text m-text-space m-text-line-height m-opacity">
-                    Copyright © 2023 Jared Wang. All rights reserved.
-                </p>
-            </div>
-        </div>
-    </footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+<script src="../../static/lib/editor_md/editormd.min.js" th:src="@{/lib/editor_md/editormd.min.js}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
-    <script src="../../static/lib/editor_md/editormd.min.js" th:src="@{/lib/editor_md/editormd.min.js}"></script>
-
-    <script>
-        $('.menu.toggle').click(function () {
+<script>
+    $('.menu.toggle').click(function () {
             $('.m-item').toggleClass('m-mobile-hide');
         }
-        );
+    );
 
-        $('.ui.dropdown').dropdown({
+    $('.ui.dropdown').dropdown({
             on: 'hover'
         }
-        );
+    );
 
-        $('.ui.form').form({
+    $('.ui.form').form({
             fields: {
                 title: {
                     identifier: 'title',
                     rules: [{
                         type: 'empty',
-                        prompt: 'Please fill the title'
+                        prompt: 'Please name your blog.'
+                    }],
+
+                },
+                content: {
+                    identifier: 'content',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Empty blog is not accepted.'
+                    }],
+
+                },
+                "type.typeId": {
+                    identifier: 'type.typeId',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Category cannot be empty.'
+                    }],
+
+                },
+                profile: {
+                    identifier: 'profile',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'profile cannot be empty.'
+                    }],
+
+                },
+                flag: {
+                    identifier: 'flag',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'flag cannot be empty.'
                     }],
 
                 }
             }
         }
-        );
+    );
 
 
-        // initialize mark down
-        var contentEditor;
+    // initialize mark down
+    var contentEditor;
 
-        $(function () {
-            testEditor = editormd("md-content", {
-                width: "100%",
-                height: 640,
-                syncScrolling: "single",
-                path: "../../static/lib/editor_md/lib/"
-            });
-
-            /*
-            // or
-            testEditor = editormd({
-                id      : "test-editormd",
-                width   : "90%",
-                height  : 640,
-                path    : "../../lib/"
-            });
-            */
+    $(function () {
+        testEditor = editormd("md-content", {
+            width: "100%",
+            height: 640,
+            syncScrolling: "single",
+            // static page need
+            // path: "../../static/lib/editor_md/lib/"
+            // thymeleaf use the one below
+            path: "/lib/editor_md/lib/"
         });
-    </script>
+
+        $("#save_btn").click(function () {
+            $('[name="publish"]').val(false);
+            $('#blog_form').submit();
+        });
+
+        $("#publish_btn").click(function () {
+            $('[name="publish"]').val(true);
+            $('#blog_form').submit();
+        })
+
+        /*
+        // or
+        testEditor = editormd({
+            id      : "test-editormd",
+            width   : "90%",
+            height  : 640,
+            path    : "../../lib/"
+        });
+        */
+    });
+</script>
 </body>
 
 </html>
