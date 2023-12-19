@@ -4,9 +4,7 @@ import com.example.my_blog.dao.CategoryRepository;
 import com.example.my_blog.entity.Type;
 import com.example.my_blog.service.CategoryService;
 import jakarta.annotation.Resource;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,5 +57,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Type> findAllCategories() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public List<Type> queryTop(Integer top) {
+        Pageable pageable = PageRequest.of(0, top);
+        return categoryRepository.findTop(pageable);
     }
 }

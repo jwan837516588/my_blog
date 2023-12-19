@@ -1,15 +1,16 @@
 package com.example.my_blog.service.impl;
 
+import com.example.my_blog.coustom_exception.NotFoundException;
 import com.example.my_blog.dao.BlogRepository;
 import com.example.my_blog.entity.Blog;
 import com.example.my_blog.entity.Type;
 import com.example.my_blog.entity.scope.BlogScope;
 import com.example.my_blog.service.BlogService;
+import com.example.my_blog.utils.MarkdownUtils;
 import jakarta.annotation.Resource;
 import jakarta.persistence.criteria.Predicate;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +23,14 @@ import java.util.List;
 public class BlogServiceImpl implements BlogService {
     @Resource
     private BlogRepository blogRepository;
+
     @Override
     @Transactional
     public Blog saveBlog(Blog blog) {
         if (blog.getBlogId() == null) {
             blog.setCreateTime(new Date());
             blog.setNumOfViews(0);
-        }
-        else {
+        } else {
             Blog b = queryBlogById(blog.getBlogId());
             blog.setNumOfViews(b.getNumOfViews());
             blog.setCreateTime(b.getCreateTime());
@@ -45,7 +46,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog queryBlog(Blog blog) {
+    public Blog queryBlogs(Blog blog) {
         return blogRepository.findOne(Example.of(blog)).orElse(null);
     }
 
@@ -55,7 +56,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Page<Blog> queryBlog(Pageable pageableBlog, BlogScope blog) {
+    public Page<Blog> queryBlogs(Pageable pageableBlog, BlogScope blog) {
         Specification<Blog> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (blog.getTitle() != null && !"".equals(blog.getTitle())) {
@@ -76,6 +77,36 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public long countBlog(Blog blog) {
         return blogRepository.count(Example.of(blog));
+    }
+
+    @Override
+    public Page<Blog> queryBlogs(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Blog> queryTopRecommend(Integer top) {
+        Pageable pageable = PageRequest.of(0, top,
+                Sort.by(Sort.Direction.DESC, "updateTime"));
+        return blogRepository.queryTopRecommend(pageable);
+    }
+
+    @Override
+    public Page<Blog> queryBlogs(String query, Pageable pageable) {
+        query = "%" + query + "%";
+        return blogRepository.findByQuery(query, pageable);
+    }
+
+    @Override
+    public Blog getConvertedBlogById(Long id) {
+        Blog blog = queryBlogById(id);
+        if (blog == null) {
+            throw new NotFoundException("The blog does not exist");
+        }
+        Blog res = new Blog();
+        BeanUtils.copyProperties(blog, res);
+        res.setContent(MarkdownUtils.markdownToHtmlExtension(res.getContent()));
+        return res;
     }
 
 }

@@ -4,9 +4,7 @@ import com.example.my_blog.dao.TagRepository;
 import com.example.my_blog.entity.Tag;
 import com.example.my_blog.service.TagService;
 import jakarta.annotation.Resource;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,5 +62,11 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<Tag> findAllTags() {
         return tagRepository.findAll();
+    }
+
+    @Override
+    public List<Tag> queryTop(Integer top) {
+        Pageable pageable = PageRequest.of(0, top);
+        return tagRepository.findTop(pageable);
     }
 }

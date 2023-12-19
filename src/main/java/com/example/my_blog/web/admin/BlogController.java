@@ -22,11 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 @Controller
 @RequestMapping("/admin/blog")
@@ -46,7 +42,7 @@ public class BlogController {
     public String listPage(@PageableDefault(size = 5, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                            Model model, BlogScope blog) {
         model.addAttribute("types", categoryService.findAllCategories());
-        model.addAttribute("page", blogService.queryBlog(pageable, blog));
+        model.addAttribute("page", blogService.queryBlogs(pageable, blog));
         return "admin/list";
     }
 
@@ -62,7 +58,7 @@ public class BlogController {
     @PostMapping("/list/search")
     public String search(@PageableDefault(size = 5, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                          Model model, BlogScope blog) {
-        model.addAttribute("page", blogService.queryBlog(pageable, blog));
+        model.addAttribute("page", blogService.queryBlogs(pageable, blog));
         return "admin/list :: blogList";
     }
 

@@ -15,7 +15,7 @@ public class Type {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "type", fetch = FetchType.EAGER)
     private List<Blog> blogs = new ArrayList<>();
 
     public Type() {

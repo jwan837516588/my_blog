@@ -23,4 +23,6 @@ public interface TagService {
     Tag queryTagByName(String name);
 
     List<Tag> findAllTags();
+
+    List<Tag> queryTop(Integer top);
 }

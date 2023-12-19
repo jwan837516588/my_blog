@@ -22,4 +22,6 @@ public interface CategoryService {
     Type queryCategoryByName(String name);
 
     List<Type> findAllCategories();
+
+    List<Type> queryTop(Integer top);
 }

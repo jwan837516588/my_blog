@@ -29,6 +29,7 @@ public class Blog {
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+    private String description;
 
     @ManyToOne
     private Type type;
@@ -50,7 +51,7 @@ public class Blog {
 
     }
 
-    public Blog(Long blogId, String title, String content, String profile, String flag, Integer numOfViews, boolean donationSwitch, boolean copyrightSwitch, boolean commentSwitch, boolean publish, boolean recommendSwitch, Date createTime, Date updateTime) {
+    public Blog(Long blogId, String title, String content, String profile, String flag, Integer numOfViews, boolean donationSwitch, boolean copyrightSwitch, boolean commentSwitch, boolean publish, boolean recommendSwitch, Date createTime, Date updateTime, String description, Type type, User user, String tagIds, List<Tag> tags, List<Comment> comments) {
         this.blogId = blogId;
         this.title = title;
         this.content = content;
@@ -64,8 +65,13 @@ public class Blog {
         this.recommendSwitch = recommendSwitch;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.description = description;
+        this.type = type;
+        this.user = user;
+        this.tagIds = tagIds;
+        this.tags = tags;
+        this.comments = comments;
     }
-
 
     public Long getBlogId() {
         return blogId;
@@ -211,6 +217,14 @@ public class Blog {
         this.tagIds = tagIds;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Blog{" +
@@ -227,6 +241,12 @@ public class Blog {
                 ", recommendSwitch=" + recommendSwitch +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", description='" + description + '\'' +
+                ", type=" + type +
+                ", user=" + user +
+                ", tagIds='" + tagIds + '\'' +
+                ", tags=" + tags +
+                ", comments=" + comments +
                 '}';
     }
 }

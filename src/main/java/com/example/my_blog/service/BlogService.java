@@ -6,17 +6,26 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface BlogService {
     Blog saveBlog(Blog blog);
 
     @Transactional
     void deleteBlogById(Long id);
 
-    Blog queryBlog(Blog blog);
+    Blog queryBlogs(Blog blog);
     Blog queryBlogById(Long blogId);
-    Page<Blog> queryBlog(Pageable pageableBlog, BlogScope blog);
+    Page<Blog> queryBlogs(Pageable pageableBlog, BlogScope blog);
 //    void updateBlog(blog blog);
 
     long countBlog(Blog blog);
 
+    Page<Blog> queryBlogs(Pageable pageable);
+
+    List<Blog> queryTopRecommend(Integer top);
+
+    Page<Blog> queryBlogs(String query, Pageable pageable);
+
+    Blog getConvertedBlogById(Long id);
 }
