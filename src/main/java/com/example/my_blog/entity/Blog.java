@@ -51,6 +51,10 @@ public class Blog {
 
     }
 
+    public Blog(Long blogId) {
+        this.blogId = blogId;
+    }
+
     public Blog(Long blogId, String title, String content, String profile, String flag, Integer numOfViews, boolean donationSwitch, boolean copyrightSwitch, boolean commentSwitch, boolean publish, boolean recommendSwitch, Date createTime, Date updateTime, String description, Type type, User user, String tagIds, List<Tag> tags, List<Comment> comments) {
         this.blogId = blogId;
         this.title = title;

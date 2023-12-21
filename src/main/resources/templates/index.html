@@ -234,13 +234,13 @@
                                     <i class="idea icon"></i> Categories
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="#" target="_blank">more <i class="angle double right icon"></i></a>
+                                    <a href="#" th:href="@{/category/-1}" target="_blank">more <i class="angle double right icon"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="ui teal segment">
                             <div class="ui fluid vertical menu">
-                                <a href="#" class="item" th:each="type : ${types}">
+                                <a href="#" th:href="@{/category/{id}(id=${type.typeId})}" target="_blank" class="item" th:each="type : ${types}">
                                     <span th:text="${type.name}">学习日志</span>
                                     <div class="ui teal basic left pointing label" th:text="${#arrays.length(type.blogs)}">13</div>
                                 </a>
@@ -255,12 +255,13 @@
                                     <i class="tags icon"></i> Tags
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="#" target="_blank">more <i class="angle double right icon"></i></a>
+                                    <a href="#" th:href="@{/tag/-1}" target="_blank">more <i class="angle double right icon"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="ui teal segment">
-                            <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tiny"
+                            <a href="#" th:href="@{/tags/{id}(id=${tag.tagId})}"
+                               target="_blank" class="item" class="ui teal basic left pointing label m-margin-tiny"
                                th:each="tag : ${tags}">
                                 <span th:text="${tag.name}">Java</span>
                                 <div class="detail" th:text="${#arrays.length(tag.blogs)}">3</div>
@@ -357,6 +358,8 @@
             $('.m-item').toggleClass('m-mobile-hide');
         }
         );
+        $('#latestBlog-container').load(/*[[@{/footer/story}]]*/"/footer/story")
+
     </script>
 </body>
 

@@ -42,8 +42,8 @@
 <div class="ui right attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="./post" class="item">New Post</a>
-            <a href="./list" class="item">History</a>
+            <a href="./post" th:href="@{post}" class="item">New Post</a>
+            <a href="./list" th:href="@{list}" class="item">History</a>
         </div>
     </div>
 </div>
@@ -168,6 +168,7 @@
             }
         }
     );
+    $('#latestBlog-container').load(/*[[@{/footer/story}]]*/"/footer/story")
 </script>
 </body>
 

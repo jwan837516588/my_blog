@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tags</title>
+    <title>Add Tag</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../../static/lib/editor_md/css/editormd.min.css"
+          th:href="@{/lib/editor_md/css/editormd.min.css}">
 </head>
 
 <body>
@@ -16,7 +18,8 @@
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">Console</h2>
-            <a href="#" th:href="@{/admin/blog/list}" class="m-item item m-mobile-hide"><i class="home icon"></i>Dashboard</a>
+            <a href="#" th:href="@{/admin/blog/list}" class="m-item item m-mobile-hide"><i
+                    class="home icon"></i>Dashboard</a>
             <a href="#" th:href="@{/admin/categories}" class="m-item item m-mobile-hide"><i class="idea icon"></i>Categories</a>
             <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tags</a>
             <div class="right m-item m-mobile-hide menu">
@@ -39,62 +42,47 @@
 <div class="ui right attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="./post" class="item">New Post</a>
-            <a href="./list" class="teal active item">History</a>
+            <a href="./post" th:href="@{post}" class="item">New Post</a>
+            <a href="./list" th:href="@{list}" class="item">History</a>
         </div>
     </div>
 </div>
-
-<!--body-->
-<div class=".m-container m-padded-tb-big">
-    <div class="ui container">
-        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
-            <i class="close icon"></i>
-            <div class="header">Successful</div>
-            <p th:text="${message}">Operation success!</p>
-        </div>
-        <table class="ui celled table">
-            <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Operation</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="tag,iterStat : ${page.content}">
-                <td th:text="${iterStat.count}"></td>
-                <td th:text="${tag.name}"></td>
-                <td>
-                    <a href="#" th:href="@{/admin/tags/input/{id}(id=${tag.tagId})}" class="ui small teal basic button">edit</a>
-                    <a href="#" th:href="@{/admin/tags/delete/{id}(id=${tag.tagId})}" class="ui small red basic button">delete</a>
-                </td>
-            </tr>
-            </tbody>
-
-            <tfoot>
-            <tr>
-                <th colspan="3">
-                    <a href="#" th:href="@{/admin/tags/input}" class="ui teal basic button">Add</a>
-                    <div class="ui small right floated pagination menu" th:if="${page.totalPages}>1">
-                        <a th:href="@{/admin/tags(id=${page.number}-1)}" class="icon item" th:unless="${page.first}">
-                            <i class="left chevron icon"></i>
-                        </a>
-
-
-                        <a th:href="@{/admin/tags(id=${page.number}+1)}" class="icon item" th:unless="${page.last}">
-                            <i class="right chevron icon"></i>
-                        </a>
-                    </div>
-                </th>
-            </tr>
-
-            </tfoot>
-        </table>
-    </div>
-</div>
-
 <br>
+<br>
+<br>
+<br>
+<!--body-->
+<div class=".m-container m-padded-tb-massive">
+    <div class="ui text container">
+        <form action="#" method="post" th:action="*{tagId}==null ? @{/admin/tags} : @{/admin/tags/edit}"
+              th:object="${tag}" class="ui form">
+            <input type="hidden" name="tagId" th:value="*{tagId}">
+            <div class="required field">
+                <div class="ui left labeled action input">
+                    <label class="ui teal basic label">Tag Name</label>
+                    <input type="text" name="name" placeholder="Type here..." th:value="*{name}">
+                    <button class="ui teal right labeled icon button">
+                        <i class="add icon"></i>
+                        Add
+                    </button>
+                </div>
+            </div>
+
+            <div class="ui error message"></div>
+
+<!--            /*/
+            <div class="ui negative message" th:if="${#fields.hasErrors('name')}">
+                <i class="close icon"></i>
+                <div class="header">Operation Failed</div>
+                <p th:errors="*{name}">Operation is illegal</p>
+            </div>
+             /*/-->
+            <br>
+            <br>
+        </form>
+    </div>
+</div>
+
 <br>
 <br>
 <br>
@@ -154,6 +142,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+<script src="../../static/lib/editor_md/editormd.min.js" th:src="@{/lib/editor_md/editormd.min.js}"></script>
 
 <script>
     $('.menu.toggle').click(function () {
@@ -163,6 +152,20 @@
 
     $('.ui.dropdown').dropdown({
             on: 'hover'
+        }
+    );
+
+    $('.ui.form').form({
+            fields: {
+                title: {
+                    identifier: 'name',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Name cannot be empty'
+                    }],
+
+                }
+            }
         }
     );
     $('#latestBlog-container').load(/*[[@{/footer/story}]]*/"/footer/story")

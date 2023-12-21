@@ -31,3 +31,5 @@ logging:
 
 server:
   port: 8080
+
+comment.photo: /images/guest_photo.jpg

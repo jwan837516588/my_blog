@@ -30,6 +30,8 @@ public class Comment {
     @ManyToOne()
     private Comment pComment;
 
+    private boolean adminComment;
+
     public Comment(long commentId, String nickname, String photo, String email, String content, Date createTime) {
         this.commentId = commentId;
         this.nickname = nickname;
@@ -96,6 +98,30 @@ public class Comment {
 
     public void setBlog(Blog blog) {
         this.blog = blog;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Comment getpComment() {
+        return pComment;
+    }
+
+    public void setpComment(Comment pComment) {
+        this.pComment = pComment;
+    }
+
+    public boolean isAdminComment() {
+        return adminComment;
+    }
+
+    public void setAdminComment(boolean adminComment) {
+        this.adminComment = adminComment;
     }
 
     @Override

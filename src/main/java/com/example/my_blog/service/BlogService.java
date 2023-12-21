@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BlogService {
     Blog saveBlog(Blog blog);
@@ -28,4 +29,10 @@ public interface BlogService {
     Page<Blog> queryBlogs(String query, Pageable pageable);
 
     Blog getConvertedBlogById(Long id);
+
+    Page<Blog> queryBlogsByTagId(Pageable pageable, Long id);
+
+    Map<String, List<Blog>> queryBlogsByYear();
+
+    int countBlogs();
 }

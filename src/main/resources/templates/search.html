@@ -92,7 +92,8 @@
                         </a>
                     </div>
                 </div>
-            </div>        </div>
+            </div>
+        </div>
 
         <!-- bottom(paging) -->
         <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
@@ -170,6 +171,8 @@
             $('.m-item').toggleClass('m-mobile-hide');
         }
     );
+    $('#latestBlog-container').load(/*[[@{/footer/story}]]*/"/footer/story")
+
 </script>
 </body>
 

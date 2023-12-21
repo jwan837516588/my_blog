@@ -98,10 +98,8 @@
                     <h4 class="ui inverted header m-thin-text m-text-space">
                         Latest Blog
                     </h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">User Story</a>
-                        <a href="#" class="item">User Story</a>
-                        <a href="#" class="item">User Story</a>
+                    <div class="ui inverted link list" th:fragment="blogList">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank" class="item" th:each="blog : ${latestBlogs}">User Story</a>
                     </div>
                 </div>
                 <div class="three wide column">
@@ -158,6 +156,8 @@
                 position:'bottom center'
             }
         );
+        $('#latestBlog-container').load(/*[[@{/footer/story}]]*/"/footer/story")
+
     </script>
 </body>
 

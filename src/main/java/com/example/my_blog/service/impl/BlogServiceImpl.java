@@ -3,11 +3,13 @@ package com.example.my_blog.service.impl;
 import com.example.my_blog.coustom_exception.NotFoundException;
 import com.example.my_blog.dao.BlogRepository;
 import com.example.my_blog.entity.Blog;
+import com.example.my_blog.entity.Tag;
 import com.example.my_blog.entity.Type;
 import com.example.my_blog.entity.scope.BlogScope;
 import com.example.my_blog.service.BlogService;
 import com.example.my_blog.utils.MarkdownUtils;
 import jakarta.annotation.Resource;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
@@ -15,9 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -98,6 +98,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    @Transactional
     public Blog getConvertedBlogById(Long id) {
         Blog blog = queryBlogById(id);
         if (blog == null) {
@@ -106,7 +107,34 @@ public class BlogServiceImpl implements BlogService {
         Blog res = new Blog();
         BeanUtils.copyProperties(blog, res);
         res.setContent(MarkdownUtils.markdownToHtmlExtension(res.getContent()));
+
+        blogRepository.updateViews(id);
+
         return res;
+    }
+
+    @Override
+    public Page<Blog> queryBlogsByTagId(Pageable pageable, Long id) {
+        Specification<Blog> spec = (root, query, criteriaBuilder) -> {
+            Join<Blog, Tag> tags = root.join("tags");
+            return criteriaBuilder.equal(tags.get("tagId"), id);
+        };
+        return blogRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    public Map<String, List<Blog>> queryBlogsByYear() {
+        HashMap<String, List<Blog>> blogsGroupByYear = new HashMap<>();
+        List<String> years = blogRepository.findGroupYear();
+        for (String year : years) {
+            blogsGroupByYear.put(year, blogRepository.findByYear(year));
+        }
+        return blogsGroupByYear;
+    }
+
+    @Override
+    public int countBlogs() {
+        return (int) blogRepository.count();
     }
 
 }

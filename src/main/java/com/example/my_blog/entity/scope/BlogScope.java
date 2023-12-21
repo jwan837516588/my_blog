@@ -7,6 +7,13 @@ public class BlogScope {
 
     private Boolean recommend;
 
+    public BlogScope() {
+    }
+
+    public BlogScope(Long typeId) {
+        this.typeId = typeId;
+    }
+
     public Long getTypeId() {
         return typeId;
     }

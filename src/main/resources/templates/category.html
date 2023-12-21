@@ -46,7 +46,7 @@
                         </h3>
                     </div>
                     <div class="right aligned column">
-                        <h2 class="ui orange header m-inline-block m-thin-text">
+                        <h2 class="ui orange header m-inline-block m-thin-text" th:text="${#arrays.length(types)}">
                             3
                         </h2>
                         posts
@@ -56,34 +56,21 @@
 
             <!-- category -->
             <div class="ui attached segment">
-                <div class="ui labeled button m-margin-tb-tiny">
-                    <a href="#" class="ui basic teal button">思考与感悟</a>
-                    <div class="ui basic teal left pointing label">23</div>
-                </div>
-
-                <div class="ui labeled button m-margin-tb-tiny">
-                    <a href="#" class="ui basic button">思考与感悟</a>
-                    <div class="ui basic left pointing label">23</div>
-                </div>
-
-                <div class="ui labeled button m-margin-tb-tiny">
-                    <a href="#" class="ui basic button">思考与感悟</a>
-                    <div class="ui basic left pointing label">23</div>
-                </div>
-
-                <div class="ui labeled button m-margin-tb-tiny">
-                    <a href="#" class="ui basic button">思考与感悟</a>
-                    <div class="ui basic left pointing label">23</div>
+                <div class="ui labeled button m-margin-tb-tiny" th:each="type : ${types}">
+                    <a href="#" th:href="@{/category{id}(id=${type.typeId})}" class="ui basic button"
+                       th:classappend="${type.typeId==activeTypeId} ? 'teal'"><span th:text="${type.name}">思考与感悟</span></a>
+                    <div class="ui basic teal left pointing label" th:classappend="${type.typeId==activeTypeId} ? 'teal'"
+                         th:text="${#arrays.length(type.blogs)}">3</div>
                 </div>
             </div>
 
             <!-- content -->
             <div class="ui top attached teal segment">
-                <div class="ui m-padded-side-clear vertical segment m-padded-tb-large">
+                <div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.content}">
                     <div class="ui mobile reversed stackable grid">
                         <div class="eleven wide column">
-                            <h3 class="ui header">心灵鸡汤</h3>
-                            <p class="m-thin-text m-text-space m-text-line-height">
+                            <h3 class="ui header"><a href="#" class="m-black" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank">心灵鸡汤</a></h3>
+                            <p class="m-thin-text m-text-space m-text-line-height" th:text="|${blog.description}......|">
                                 在生命的舞台上，每一天都是一次珍贵的表演。忘记昨日的烦恼，抬头望向明天的阳光。像向阳植物一样，让心灵在阳光下舒展。不必追逐繁星，拥抱内心的宁静。生活如诗，平凡中蕴含着美好。每一刻都是收获，每一步都是成长。相信自己，勇敢前行，因为你的内心是最美的风景。
                             </p>
                             <div class="ui stackable grid">
@@ -91,115 +78,44 @@
                                     <div class="ui mini horizontal link list">
                                         <div class="item">
                                             <img src="https://unsplash.it/100/100?image=1005" alt=""
-                                                class="ui avatar image">
-                                            <div class="content"><a href="#" class="header">wjr</a></div>
+                                                 class="ui avatar image" th:src="@{${blog.user.photo}}">
+                                            <div class="content"><a href="#" class="header" th:text="${blog.user.nickname}">wjr</a></div>
                                         </div>
                                         <div class="item">
-                                            <i class="calendar icon"></i> 2023-11-29
+                                            <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2023-11-29</span>
                                         </div>
                                         <div class="item">
-                                            <i class="eye icon"></i> 1000
+                                            <i class="eye icon"></i><span th:text="${blog.numOfViews}">1000</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="right aligned five wide column">
-                                    <a href="" target="_blank"
-                                        class="ui teal basic label m-padded-tiny m-thin-text">认知升级</a>
+                                    <a href="#" target="_blank"
+                                       class="ui teal basic label m-padded-tiny m-thin-text" th:text="${blog.type.name}">认知升级</a>
                                 </div>
                             </div>
                         </div>
                         <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://unsplash.it/800/450?image=1005" alt=""
-                                    class="ui rounded image">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui m-padded-side-clear vertical segment m-padded-tb-large">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="eleven wide column">
-                            <h3 class="ui header">心灵鸡汤</h3>
-                            <p class="m-thin-text m-text-space m-text-line-height">
-                                在生命的舞台上，每一天都是一次珍贵的表演。忘记昨日的烦恼，抬头望向明天的阳光。像向阳植物一样，让心灵在阳光下舒展。不必追逐繁星，拥抱内心的宁静。生活如诗，平凡中蕴含着美好。每一刻都是收获，每一步都是成长。相信自己，勇敢前行，因为你的内心是最美的风景。
-                            </p>
-                            <div class="ui stackable grid">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
-                                                class="ui avatar image">
-                                            <div class="content"><a href="#" class="header">wjr</a></div>
-                                        </div>
-                                        <div class="item">
-                                            <i class="calendar icon"></i> 2023-11-29
-                                        </div>
-                                        <div class="item">
-                                            <i class="eye icon"></i> 1000
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right aligned five wide column">
-                                    <a href="" target="_blank"
-                                        class="ui teal basic label m-padded-tiny m-thin-text">认知升级</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://unsplash.it/800/450?image=1005" alt=""
-                                    class="ui rounded image">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui m-padded-side-clear vertical segment m-padded-tb-large">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="eleven wide column">
-                            <h3 class="ui header">心灵鸡汤</h3>
-                            <p class="m-thin-text m-text-space m-text-line-height">
-                                在生命的舞台上，每一天都是一次珍贵的表演。忘记昨日的烦恼，抬头望向明天的阳光。像向阳植物一样，让心灵在阳光下舒展。不必追逐繁星，拥抱内心的宁静。生活如诗，平凡中蕴含着美好。每一刻都是收获，每一步都是成长。相信自己，勇敢前行，因为你的内心是最美的风景。
-                            </p>
-                            <div class="ui stackable grid">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <img src="https://unsplash.it/100/100?image=1005" alt=""
-                                                class="ui avatar image">
-                                            <div class="content"><a href="#" class="header">wjr</a></div>
-                                        </div>
-                                        <div class="item">
-                                            <i class="calendar icon"></i> 2023-11-29
-                                        </div>
-                                        <div class="item">
-                                            <i class="eye icon"></i> 1000
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right aligned five wide column">
-                                    <a href="" target="_blank"
-                                        class="ui teal basic label m-padded-tiny m-thin-text">认知升级</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://unsplash.it/800/450?image=1005" alt=""
-                                    class="ui rounded image">
+                            <a href="#" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank">
+                                <img src="https://unsplash.it/1000/500?image=1005" th:src="@{${blog.profile}}" alt=""
+                                     class="ui rounded image">
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- bottom -->
-            <div class="ui bottom attached segment">
+
+            <!-- bottom(paging) -->
+            <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
                 <div class="ui middle aligned two column grid">
                     <div class="column">
-                        <a href="#" class="ui teal basic button">上一页</a>
+                        <a href="#" th:href="@{/(page=${page.number}-1)}"
+                           class="ui teal basic mini button" th:unless="${page.first}">Previous</a>
                     </div>
                     <div class="right aligned column">
-                        <a href="#" class="ui teal basic button">下一页</a>
+                        <a href="#" th:href="@{/(page=${page.number}+1)}"
+                           th:unless="${page.last}" class="ui teal basic mini button">Next</a>
                     </div>
                 </div>
             </div>
@@ -266,6 +182,8 @@
             $('.m-item').toggleClass('m-mobile-hide');
         }
         );
+        $('#latestBlog-container').load(/*[[@{/footer/story}]]*/"/footer/story")
+
     </script>
 </body>
 

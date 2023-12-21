@@ -23,7 +23,7 @@ public class HomepageController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String index(@PageableDefault(size = 5, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         Model model) {
         model.addAttribute("page", blogService.queryBlogs(pageable));
@@ -45,5 +45,11 @@ public class HomepageController {
     public String blog(@PathVariable Long id, Model model) {
         model.addAttribute("blog", blogService.getConvertedBlogById(id));
         return "blog";
+    }
+
+    @GetMapping("/footer/story")
+    public String latestBlog(Model model) {
+        model.addAttribute("latestBlogs", blogService.queryTopRecommend(3));
+        return "_fragments :: blogList";
     }
 }
