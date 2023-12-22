@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long>, JpaSpecificationExecutor<Comment> {
-    List<Comment> findAllByBlogBlogIdAndPCommentNull(Long blogId, Sort sort);
+    List<Comment> findAllByBlogBlogId(Long blogId, Sort sort);
 }

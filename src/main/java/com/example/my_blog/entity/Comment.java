@@ -23,7 +23,7 @@ public class Comment {
     private Blog blog;
 
     // 当前Comment类作为one时，reply comments是many，
-    @OneToMany(mappedBy = "pComment")
+    @OneToMany(mappedBy = "pComment", fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
 
     // 当前comment为reply comment是多，则对应上级comment为1

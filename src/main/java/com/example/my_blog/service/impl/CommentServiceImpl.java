@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +22,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> queryCommentByBlogId(Long blogId) {
-        List<Comment> comments = commentRepository.findAllByBlogBlogIdAndPCommentNull(blogId, Sort.by("createTime"));
+        List<Comment> comments = commentRepository.findAllByBlogBlogId(blogId, Sort.by("createTime"));
+        comments.removeIf(e-> e.getpComment()!=null);
         return iterHeadNode(comments);
     }
 
@@ -59,12 +61,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public Comment saveComment(Comment comment) {
         // default value -1 is assigned from the front-end
         long parentCommentId = comment.getpComment().getCommentId();
         // find parent comment, if id exist, then set found one to pComment, otherwise set null.
-        Comment pComment = commentRepository.findById(parentCommentId).orElse(null);
-        comment.setpComment(pComment);
+        comment.setpComment(commentRepository.findById(parentCommentId).orElse(null));
 
         comment.setCreateTime(new Date());
 
