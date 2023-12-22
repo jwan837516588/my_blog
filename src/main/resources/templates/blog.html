@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>detail</title>
+    <title>Blog</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
     <link rel="stylesheet" href="../static/lib/prismjs/prism.css" th:href="@{/lib/prismjs/prism.css}">
@@ -16,7 +16,7 @@
 <body>
 
 <!--navigator-->
-<nav class="ui inverted attached segment m-padded-tb-mini m-shadow">
+<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">Blog</h2>
@@ -44,30 +44,35 @@
         <div class="ui top attached segment">
             <div class="ui mini horizontal link list">
                 <div class="item">
-                    <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                    <div class="content"><a href="#" class="header">wjr</a></div>
+                    <img src="https://unsplash.it/100/100?image=1005" th:src="@{${blog.user.photo}}" alt=""
+                         class="ui avatar image">
+                    <div class="content">
+                        <a href="#" th:href="@{/me}" th:text="${blog.user.nickname}" class="header">wjr</a>
+                    </div>
                 </div>
                 <div class="item">
-                    <i class="calendar icon"></i> 2023-11-29
+                    <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2023-11-29</span>
                 </div>
                 <div class="item">
-                    <i class="eye icon"></i> 1000
+                    <i class="eye icon"></i><span th:text="${blog.numOfViews}">1000</span>
                 </div>
             </div>
         </div>
         <div class="ui attached padded segment">
-            <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui fluid rounded image">
+            <img src="https://unsplash.it/800/450?image=1005" th:src="@{${blog.profile}}" alt=""
+                 class="ui fluid rounded image">
         </div>
         <div class="ui attached segment">
             <div class="ui right aligned basic segment">
-                <div class="ui orange basic label">
-                    原创
+                <div class="ui orange basic label" th:text="${blog.flag}">
+                    Creating
                 </div>
             </div>
 
-            <h2 class="ui center aligned header">关于刻意练习的清单</h2>
+            <h2 class="ui center aligned header" th:text="${blog.title}">关于刻意练习的清单</h2>
             <br>
-            <div id="content" class="typo typo-selection js-toc-content m-padded-side-responsive m-padded-tb-large">
+            <div id="content" class="typo typo-selection js-toc-content m-padded-side-responsive m-padded-tb-large"
+                 th:utext="${blog.content}">
                 <h2 id="section1">一、关于 <i class="serif">Typo.css</i></h2>
 
                 <pre><code class="language-css">p { color: red }</code></pre>
@@ -76,9 +81,11 @@
                 <h4>现状和如何去做：</h4>
 
                 <p class="typo-first">排版是一个麻烦的问题 <sup><a href="#appendix1">#
-                    附录一</a></sup>，需要精心设计，而这个设计却是常被视觉设计师所忽略的。前端工程师更常看到这样的问题，但不便变更。因为在多个 OS
+                    附录一</a></sup>，需要精心设计，而这个设计却是常被视觉设计师所忽略的。前端工程师更常看到这样的问题，但不便变更。因为在多个
+                    OS
                     中的不同浏览器渲染不同，改动需要多的时间做回归测试，所以改变变得更困难。而像我们一般使用的
-                    Yahoo、Eric Meyer 和 Alice base.css 中采用的 Reset 都没有很好地考虑中文排版。<i class="serif">Typo.css</i>
+                    Yahoo、Eric Meyer 和 Alice base.css 中采用的 Reset 都没有很好地考虑中文排版。<i
+                            class="serif">Typo.css</i>
                     要做的就是解决中文排版的问题。</p>
 
                 <p><strong><i class="serif">Typo.css</i> 测试于如下平台：</strong></p>
@@ -146,7 +153,8 @@
 
                 <h4>中文排版的重点和难点</h4>
 
-                <p>在中文排版中，HTML4 的很多标准在语义在都有照顾到。但从视觉效果上，却很难利用单独的 CSS 来实现，像<abbr title="在文字下多加一个点">着重号</abbr>（例：这里<em
+                <p>在中文排版中，HTML4 的很多标准在语义在都有照顾到。但从视觉效果上，却很难利用单独的 CSS 来实现，像<abbr
+                        title="在文字下多加一个点">着重号</abbr>（例：这里<em
                         class="typo-em">强调一下</em>）。在 HTML4 中，专名号标签（<code>&lt;u&gt;</code>）已经被放弃，而
                     HTML5 被<a href="//html5doctor.com/u-element/">重新提起</a>。<i class="serif">Typo.css</i>
                     也根据实际情况提供相应的方案。我们重要要注意的两点是：</p>
@@ -160,8 +168,9 @@
                 </blockquote>
 
                 <p>目前已有像百姓网等全面使用 <i class="serif">Typo.css</i> 的项目，测试平台的覆盖，特别是在<abbr
-                        title="手机、平板电脑等移动平台">移动端</abbr>上还没有覆盖完主流平台，希望有能力的同学能加入测试行列，或者加入到 <i
-                        class="serif">Typo.css</i>
+                        title="手机、平板电脑等移动平台">移动端</abbr>上还没有覆盖完主流平台，希望有能力的同学能加入测试行列，或者加入到
+                    <i
+                            class="serif">Typo.css</i>
                     的开发。加入方法：<a href="https://github.com/sofish/Typo.css">参与 <i class="serif">Typo.css</i>
                         开发</a>。如有批评、建议和意见，也随时欢迎给在 Github 直接提 <a
                             href="https://github.com/sofish/Typo.css/issues">issues</a>，或给<abbr
@@ -196,7 +205,8 @@
 
                 <h4>译文</h4>
 
-                <p>孔子说：「学了又时常温习和练习，不是很愉快吗？有志同道合的人从远方来，不是很令人高兴的吗？人家不了解我，我也不怨恨、恼怒，不也是一个有德的君子吗？」 </p>
+                <p>
+                    孔子说：「学了又时常温习和练习，不是很愉快吗？有志同道合的人从远方来，不是很令人高兴的吗？人家不了解我，我也不怨恨、恼怒，不也是一个有德的君子吗？」 </p>
 
                 <h4>评析</h4>
 
@@ -205,10 +215,12 @@
                         title="张燕婴">我</abbr>的学说，纷纷到我这里来讨论问题，我也感到快乐；再退一步说，即使社会不采用，人们也不理解我，我也不怨恨，这样做，不也就是君子吗？（见《齐鲁学刊》1986年第6期文）这种解释可以自圆其说，而且也有一定的道理，供读者在理解本章内容时参考。
                 </p>
 
-                <p>此外，在对「人不知，而不愠」一句的解释中，也有人认为，「人不知」的后面没有宾语，人家不知道什么呢？当时因为孔子有说话的特定环境，他不需要说出知道什么，别人就可以理解了，却给后人留下一个谜。有人说，这一句是接上一句说的，从远方来的朋友向我求教，我告诉他，他还不懂，我却不怨恨。这样，「人不知」就是「人家不知道我所讲述的」了。这样的解释似乎有些牵强。
+                <p>
+                    此外，在对「人不知，而不愠」一句的解释中，也有人认为，「人不知」的后面没有宾语，人家不知道什么呢？当时因为孔子有说话的特定环境，他不需要说出知道什么，别人就可以理解了，却给后人留下一个谜。有人说，这一句是接上一句说的，从远方来的朋友向我求教，我告诉他，他还不懂，我却不怨恨。这样，「人不知」就是「人家不知道我所讲述的」了。这样的解释似乎有些牵强。
                 </p>
 
-                <p>总之，本章提出以学习为乐事，做到人不知而不愠，反映出孔子学而不厌、诲人不倦、注重修养、严格要求自己的主张。这些思想主张在《论语》书中多处可见，有助于对第一章内容的深入了解。</p>
+                <p>
+                    总之，本章提出以学习为乐事，做到人不知而不愠，反映出孔子学而不厌、诲人不倦、注重修养、严格要求自己的主张。这些思想主张在《论语》书中多处可见，有助于对第一章内容的深入了解。</p>
 
                 <h3 id="section2-2">例2：英文排版</h3>
 
@@ -279,7 +291,7 @@
                 <h4>You may want to create a perfect <code>&lt;hr /&gt;</code> line, despite the fact that there
                     will never have one
                 </h4>
-                <hr />
+                <hr/>
                 <p><abbr title="法国作家罗切福考尔德">La Racheforcauld</abbr> said:
                     <mark>"Few things are impossible in themselves; and it is often for want of will, rather than of
                         means, that man fails
@@ -370,7 +382,8 @@ h5,h6{font-size:1em;}
                     <tr>
                         <td>强调</td>
                         <td><code>em</code></td>
-                        <td>在全局显示正体，在 <code>.typo</code> 中显示与 <code>b</code> 和 <code>strong</code> 的样式一致，为粗体
+                        <td>在全局显示正体，在 <code>.typo</code> 中显示与 <code>b</code> 和 <code>strong</code>
+                            的样式一致，为粗体
                         </td>
                     </tr>
                     <tr>
@@ -468,44 +481,54 @@ h5,h6{font-size:1em;}
             </div>
             <!-- 标签 -->
             <div class="m-padded-side">
-                <div class="ui teal basic left pointing label">标签</div>
+                <div class="ui teal basic left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">标签
+                </div>
             </div>
 
             <!-- 赞赏 -->
-            <div class="ui center aligned basic segment">
-                <div id="payButton" class="ui orange basic circular button">赞赏</div>
-            </div>
-            <div class="ui QRcode flowing popup transition hidden">
-                <div class="ui orange basic label">
-                    <div class="ui images" style="font-size: inherit !important;">
-                        <div class="image">
-                            <img src="static/images/my_wehcat_white.jpg" alt="" class="ui rounded bordered image"
-                                 style="width: 120px">
-                            <div>WeChat</div>
-                        </div>
-                        <div class="image">
-                            <img src="static/images/my_wehcat_white.jpg" alt="" class="ui rounded bordered image"
-                                 style="width: 120px">
-                            <div>AliPay</div>
+            <div th:if="${blog.donationSwitch}">
+                <div class="ui center aligned basic segment">
+                    <div id="payButton" class="ui orange basic circular button">赞赏</div>
+                </div>
+                <div class="ui QRcode flowing popup transition hidden">
+                    <div class="ui orange basic label">
+                        <div class="ui images" style="font-size: inherit !important;">
+                            <div class="image">
+                                <img src="../static/images/my_wehcat_white.jpg"
+                                     th:src="@{/images/my_wehcat_white.jpg}"
+                                     alt="" class="ui rounded bordered image"
+                                     style="width: 120px">
+                                <div>WeChat</div>
+                            </div>
+                            <div class="image">
+                                <img src="../static/images/my_wehcat_white.jpg"
+                                     th:src="@{/images/my_wehcat_white.jpg}"
+                                     alt="" class="ui rounded bordered image"
+                                     style="width: 120px">
+                                <div>AliPay</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Author info -->
         </div>
-        <div class="ui attached positive message">
+        <!-- Author info -->
+        <div class="ui attached positive message" th:if="${blog.copyrightSwitch}">
             <div class="ui grid">
                 <div class="eleven wide column">
                     <ui class="list">
-                        <li>Author: Jared Wang</li>
-                        <li>Published Time:2023-12-1</li>
+                        <li>Author: <span th:text="${blog.user.nickname}">Jared Wang</span>
+                            <a href="#" th:href="@{/about}" target="_blank">(contact me)</a>
+                        </li>
+                        <li>Published Time:<span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd HH:mm')}">2023-12-19</span>
+                        </li>
                         <li>Copyright Notice: This work is licensed under a Creative Commons Attribution-ShareAlike
-                            4.0 International License.</li>
+                            4.0 International License.
+                        </li>
                     </ui>
                 </div>
                 <div class="five wide column">
-                    <img src="/static/images/my_wehcat_white.jpg" alt=""
+                    <img src="../static/images/my_wehcat_white.jpg" th:src="@{/images/my_wehcat_white.jpg}" alt=""
                          class="ui right floated rounded bordered image" style="width: 110px;">
                 </div>
             </div>
@@ -513,6 +536,7 @@ h5,h6{font-size:1em;}
         <!-- commnets area -->
         <div class="ui bottom attached segment" th:if="${blog.commentSwitch}">
             <div id="comment-container" class="ui teal segment">
+                <input type="hidden" name="blogId" th:value="${blog.blogId}">
                 <div th:fragment="commentList">
                     <!-- copied from Semantic UI web -->
                     <div class="ui threaded comments" style="max-width: 100%;">
@@ -574,59 +598,6 @@ h5,h6{font-size:1em;}
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="comment">
-                            <a class="avatar">
-                                <img src="/images/avatar/small/elliot.jpg">
-                            </a>
-                            <div class="content">
-                                <a class="author">Elliot Fu</a>
-                                <div class="metadata">
-                                    <span class="date">Yesterday at 12:30AM</span>
-                                </div>
-                                <div class="text">
-                                    <p>This has been very useful for my research. Thanks as well!</p>
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">Reply</a>
-                                </div>
-                            </div>
-                            <div class="comments">
-                                <div class="comment">
-                                    <a class="avatar">
-                                        <img src="/images/avatar/small/jenny.jpg">
-                                    </a>
-                                    <div class="content">
-                                        <a class="author">Jenny Hess</a>
-                                        <div class="metadata">
-                                            <span class="date">Just now</span>
-                                        </div>
-                                        <div class="text">
-                                            Elliot you are always so right :)
-                                        </div>
-                                        <div class="actions">
-                                            <a class="reply">Reply</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="/images/avatar/small/joe.jpg">
-                            </a>
-                            <div class="content">
-                                <a class="author">Joe Henderson</a>
-                                <div class="metadata">
-                                    <span class="date">5 days ago</span>
-                                </div>
-                                <div class="text">
-                                    Dude, this is awesome. Thanks so much
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">Reply</a>
-                                </div>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
             </div>
@@ -742,7 +713,8 @@ h5,h6{font-size:1em;}
 <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.3/jquery.scrollTo.min.js"></script>
 <script src="../static/lib/prismjs/prism.js" th:src="@{/lib/prismjs/prism.js}"></script>
 <script src="../static/lib/toc/tocbot.min.js" th:src="@{/lib/toc/tocbot.min.js}"></script>
-<script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js"
+        th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
 
 <script>
@@ -784,8 +756,7 @@ h5,h6{font-size:1em;}
         handler: function (direction) {
             if (direction == 'down') {
                 $('#toolbar').show(100);
-            }
-            else {
+            } else {
                 $('#toolbar').hide(500);
             }
             console.log('Scrolled to waypoint!' + direction);
@@ -825,18 +796,19 @@ h5,h6{font-size:1em;}
     $('#comment-btn').click(function () {
         const boo = $('.ui.form').form('validate form');
         if (boo) {
+            sendRequest();
             console.log('validate success!');
-            postData();
         } else {
             console.log('validate failed.');
         }
     });
 
     $(function () {
-        $("#comment-container").load(/*[[@{/comments/{id}(id=${blog.blogId})}]]*/"/comments/402");
-    })
+        var blogId = $("[name='blogId']").val();
+        $("#comment-container").load(/*[[@{/comments/{id}(id=${blog.blogId})}]]*/"/comments/" + blogId)
+    });
 
-    function postData() {
+    function sendRequest() {
         $("#comment-container").load(/*[[@{/comments}]]*/"/comments",
             {
                 "pComment.commentId": $("[name='pComment.commentId']").val(),
