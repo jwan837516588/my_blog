@@ -10,7 +10,7 @@ public class AboutMeController {
     @Resource
     private BlogService blogService;
 
-    @GetMapping("/about")
+    @GetMapping("/me")
     public String aboutMe() {
         return "about_me";
     }

@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Objects;
 
-@Controller
+@Controller("AdminCategory")
 @RequestMapping("/admin/categories")
 public class CategoryController {
 

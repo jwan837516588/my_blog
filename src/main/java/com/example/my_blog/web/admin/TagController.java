@@ -17,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller
+@Controller("AdminTag")
 @RequestMapping("/admin/tags")
 public class TagController {
 

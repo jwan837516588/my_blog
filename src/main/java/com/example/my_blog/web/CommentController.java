@@ -20,6 +20,7 @@ public class CommentController {
     private CommentService commentService;
     @Resource
     private BlogService blogService;
+
     @Value("${comment.photo}")
     private String photo;
 

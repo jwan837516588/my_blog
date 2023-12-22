@@ -21,7 +21,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> queryCommentByBlogId(Long blogId) {
-        List<Comment> comments = commentRepository.findAllByBlogIdAndPCommentNull(blogId, Sort.by("createTime"));
+        List<Comment> comments = commentRepository.findAllByBlogBlogIdAndPCommentNull(blogId, Sort.by("createTime"));
         return iterHeadNode(comments);
     }
 

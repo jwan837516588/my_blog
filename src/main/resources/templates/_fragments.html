@@ -9,11 +9,11 @@
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">Blog</h2>
-            <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${n==0} ? 'active'"><i class="home icon"></i>首页</a>
-            <a href="#" th:href="@{/category/-1}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="idea icon"></i>分类</a>
-            <a href="#" th:href="@{/tag/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="tags icon"></i>标签</a>
-            <a href="#" th:href="@{/filing}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="clone icon"></i>归档</a>
-            <a href="#" th:href="@{/me/-1}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="info icon"></i>关于我</a>
+            <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${n==0} ? 'active'"><i class="home icon"></i>Dashboard</a>
+            <a href="#" th:href="@{/category/-1}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="idea icon"></i>Category</a>
+            <a href="#" th:href="@{/tag/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="tags icon"></i>Tag</a>
+            <a href="#" th:href="@{/filing}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="clone icon"></i>Filing</a>
+            <a href="#" th:href="@{/me}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="info icon"></i>About Me</a>
             <div class="m-item right item m-mobile-hide">
                 <form name="search" action="#" th:action="@{/search}" target="_blank">
                     <div class="ui inverted transparent input">
@@ -47,7 +47,8 @@
                 <div id="latestBlog-container">
                     <div class="ui inverted link list">
                         <div class="ui inverted link list" th:fragment="blogList">
-                            <a href="#" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank" class="item" th:each="blog : ${latestBlogs}">User Story</a>
+                            <a href="#" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank" class="item"
+                               th:each="blog : ${latestBlogs}" th:text="${blog.title}">User Story</a>
                         </div>
                     </div>
                 </div>
