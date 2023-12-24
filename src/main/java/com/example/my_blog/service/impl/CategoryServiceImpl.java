@@ -29,12 +29,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Type queryCategory(Type type) {
-        Optional<Type> category = categoryRepository.findOne(Example.of(type));
-        return category.orElse(null);
-    }
-
-    @Override
     public Type queryCategoryById(Long typeId) {
         return categoryRepository.findById(typeId).orElse(null);
     }
@@ -47,11 +41,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public long countCategory(Type type) {
         return categoryRepository.count(Example.of(type));
-    }
-
-    @Override
-    public Type queryCategoryByName(String name) {
-        return categoryRepository.findByName(name);
     }
 
     @Override

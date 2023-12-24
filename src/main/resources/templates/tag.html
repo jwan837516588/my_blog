@@ -132,6 +132,18 @@
         </div>
     </div>
 
+    <div th:if="${page.totalElements}<1">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
     <!--footer-->
     <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
         <div class="ui center aligned container">

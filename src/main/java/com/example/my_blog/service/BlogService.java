@@ -4,7 +4,6 @@ import com.example.my_blog.entity.Blog;
 import com.example.my_blog.entity.scope.BlogScope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -12,15 +11,11 @@ import java.util.Map;
 public interface BlogService {
     Blog saveBlog(Blog blog);
 
-    @Transactional
     void deleteBlogById(Long id);
 
     Blog queryBlogs(Blog blog);
     Blog queryBlogById(Long blogId);
     Page<Blog> queryBlogs(Pageable pageableBlog, BlogScope blog);
-//    void updateBlog(blog blog);
-
-    long countBlog(Blog blog);
 
     Page<Blog> queryBlogs(Pageable pageable);
 
@@ -30,9 +25,14 @@ public interface BlogService {
 
     Blog getConvertedBlogById(Long id);
 
-    Page<Blog> queryBlogsByTagId(Pageable pageable, Long id);
+    Page<Blog> queryBlogsByTagId(Pageable pageable, Long tagId);
+    List<Blog> queryBlogsByTagId(Long tagId);
 
     Map<String, List<Blog>> queryBlogsByYear();
 
     int countBlogs();
+
+    void saveBatchBlogs(List<Blog> blogs);
+
+    long countBlogsByTypeId(Long id);
 }

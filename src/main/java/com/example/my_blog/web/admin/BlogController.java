@@ -87,13 +87,11 @@ public class BlogController {
     }
 
     @PostMapping("/post")
-    public String createBlog(Blog blog, RedirectAttributes attributes, HttpSession httpSession) {
+    public String writeBlog(Blog blog, RedirectAttributes attributes, HttpSession httpSession) {
         // query types by given type ids
         blog.setUser((User) httpSession.getAttribute("user"));
         Type type = categoryService.queryCategoryById(blog.getType().getTypeId());
         blog.setType(type);
-//        // Since CascadeType.PERSIST, the blog needs to be saved before setTags.
-//        blogService.saveBlog(blog);
         // query tags by given tag ids
         List<Long> tagIds = CastUtils.convertStringToLongList(blog.getTagIds());
         List<Tag> tags = tagIds != null ? tagService.queryBatchTagsByIds(tagIds) : null;

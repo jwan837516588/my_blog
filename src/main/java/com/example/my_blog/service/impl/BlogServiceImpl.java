@@ -7,6 +7,7 @@ import com.example.my_blog.entity.Tag;
 import com.example.my_blog.entity.Type;
 import com.example.my_blog.entity.scope.BlogScope;
 import com.example.my_blog.service.BlogService;
+import com.example.my_blog.service.CommentService;
 import com.example.my_blog.utils.MarkdownUtils;
 import jakarta.annotation.Resource;
 import jakarta.persistence.criteria.Join;
@@ -23,6 +24,8 @@ import java.util.*;
 public class BlogServiceImpl implements BlogService {
     @Resource
     private BlogRepository blogRepository;
+    @Resource
+    private CommentService commentService;
 
     @Override
     @Transactional
@@ -42,6 +45,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional
     public void deleteBlogById(Long id) {
+        commentService.deleteCommentsByBlogId(id);
         blogRepository.deleteById(id);
     }
 
@@ -75,13 +79,14 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public long countBlog(Blog blog) {
-        return blogRepository.count(Example.of(blog));
+    public Page<Blog> queryBlogs(Pageable pageable) {
+        return blogRepository.findAllByPublishIsTrue(pageable);
     }
 
     @Override
-    public Page<Blog> queryBlogs(Pageable pageable) {
-        return blogRepository.findAll(pageable);
+    public Page<Blog> queryBlogs(String query, Pageable pageable) {
+        query = "%" + query + "%";
+        return blogRepository.findByQuery(query, pageable);
     }
 
     @Override
@@ -89,12 +94,6 @@ public class BlogServiceImpl implements BlogService {
         Pageable pageable = PageRequest.of(0, top,
                 Sort.by(Sort.Direction.DESC, "updateTime"));
         return blogRepository.queryTopRecommend(pageable);
-    }
-
-    @Override
-    public Page<Blog> queryBlogs(String query, Pageable pageable) {
-        query = "%" + query + "%";
-        return blogRepository.findByQuery(query, pageable);
     }
 
     @Override
@@ -114,12 +113,21 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Page<Blog> queryBlogsByTagId(Pageable pageable, Long id) {
+    public Page<Blog> queryBlogsByTagId(Pageable pageable, Long tagId) {
         Specification<Blog> spec = (root, query, criteriaBuilder) -> {
             Join<Blog, Tag> tags = root.join("tags");
-            return criteriaBuilder.equal(tags.get("tagId"), id);
+            return criteriaBuilder.equal(tags.get("tagId"), tagId);
         };
         return blogRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    public List<Blog> queryBlogsByTagId(Long tagId) {
+        Specification<Blog> spec = (root, query, criteriaBuilder) -> {
+            Join<Blog, Tag> tags = root.join("tags");
+            return criteriaBuilder.equal(tags.get("tagId"), tagId);
+        };
+        return blogRepository.findAll(spec);
     }
 
     @Override
@@ -134,7 +142,18 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public int countBlogs() {
-        return (int) blogRepository.count();
+        return (int) blogRepository.countBlogByPublishIsTrue();
+    }
+
+    @Override
+    @Transactional
+    public void saveBatchBlogs(List<Blog> blogs) {
+        blogRepository.saveAll(blogs);
+    }
+
+    @Override
+    public long countBlogsByTypeId(Long id) {
+        return blogRepository.countBlogsByTypeTypeId(id);
     }
 
 }

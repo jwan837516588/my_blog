@@ -18,6 +18,7 @@ public class Comment {
     private String content;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
+    private boolean adminComment;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Blog blog;
@@ -30,7 +31,6 @@ public class Comment {
     @ManyToOne()
     private Comment pComment;
 
-    private boolean adminComment;
 
     public Comment(long commentId, String nickname, String photo, String email, String content, Date createTime) {
         this.commentId = commentId;

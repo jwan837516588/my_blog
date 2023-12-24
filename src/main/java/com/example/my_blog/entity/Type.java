@@ -1,6 +1,7 @@
 package com.example.my_blog.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
@@ -11,8 +12,7 @@ public class Type {
     @Id
     @GeneratedValue
     private Long typeId;
-
-    @NotNull
+    @NotBlank(message = "Name cannot be empty.")
     private String name;
 
     @OneToMany(mappedBy = "type", fetch = FetchType.EAGER)

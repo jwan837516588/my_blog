@@ -57,7 +57,7 @@
                     <!-- body -->
                     <div class="ui attached segment">
 
-                        <div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.content}">
+                        <div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.content}" th:if="${blog.publish}">
                             <div class="ui mobile reversed stackable grid">
                                 <div class="eleven wide column">
                                     <h3 class="ui header"><a href="#" class="m-black" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank">心灵鸡汤</a></h3>
@@ -101,11 +101,11 @@
                         <div class="ui middle aligned two column grid">
                             <div class="column">
                                 <a href="#" th:href="@{/(page=${page.number}-1)}"
-                                   class="ui teal basic mini button" th:unless="${page.first}">Previous</a>
+                                   class="ui teal basic button" th:unless="${page.first}">Previous</a>
                             </div>
                             <div class="right aligned column">
                                 <a href="#" th:href="@{/(page=${page.number}+1)}"
-                                   th:unless="${page.last}" class="ui teal basic mini button">Next</a>
+                                   th:unless="${page.last}" class="ui teal basic button">Next</a>
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                         <div class="ui teal segment">
-                            <div class="ui fluid vertical menu">
+                            <div class="ui fluid vertical menu" th:if="${#arrays.length(types)}>0">
                                 <a href="#" th:href="@{/category/{id}(id=${type.typeId})}" target="_blank" class="item" th:each="type : ${types}">
                                     <span th:text="${type.name}">学习日志</span>
                                     <div class="ui teal basic left pointing label" th:text="${#arrays.length(type.blogs)}">13</div>
@@ -157,7 +157,7 @@
                     <!-- recommend -->
                     <div class="ui segments">
                         <div class="ui secondary segment">
-                            <i class="bookmark icon"></i> Latest Blog
+                            <i class="bookmark icon"></i> Latest Blog Recommendations
                         </div>
 
                         <div class="ui segment" th:each="blog : ${recommendBlogs}">
@@ -175,13 +175,17 @@
 
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        <div th:if="${page.totalElements}<1">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
     </div>
 
     <!--footer-->
@@ -198,7 +202,7 @@
                 </div>
                 <div class="three wide column">
                     <h4 class="ui inverted header m-thin-text m-text-space">
-                        Latest Blog
+                        Latest Blog Recommendations
                     </h4>
                     <div class="ui inverted link list">
                         <a href="#" class="item">User Story</a>

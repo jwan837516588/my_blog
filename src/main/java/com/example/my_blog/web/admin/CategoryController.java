@@ -2,9 +2,11 @@ package com.example.my_blog.web.admin;
 
 import com.example.my_blog.coustom_exception.NotFoundException;
 import com.example.my_blog.entity.Type;
+import com.example.my_blog.service.BlogService;
 import com.example.my_blog.service.CategoryService;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -25,6 +27,9 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private BlogService blogService;
+
     @GetMapping
     public String category(@PageableDefault(size = 5, sort = {"typeId"}, direction = Sort.Direction.DESC) Pageable pageable, Model model
     ) {
@@ -38,8 +43,7 @@ public class CategoryController {
         String path = uri.substring(uri.lastIndexOf("/"));
         if ("/input".equals(path)) {
             model.addAttribute("type", new Type());
-        }
-        else {
+        } else {
             Type type = categoryService.queryCategoryById(id);
             if (type == null) {
                 throw new NotFoundException("The Category does not exist.");
@@ -50,7 +54,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public String input(@Validated Type type, BindingResult result, RedirectAttributes attributes) {
+    public String input(@Valid Type type, BindingResult result, RedirectAttributes attributes) {
         if (categoryService.countCategory(type) > 0) {
             String error = String.format("%s already exist", type.getName());
             result.rejectValue("name", "nameError", error);
@@ -58,33 +62,39 @@ public class CategoryController {
         }
 
         Type t = categoryService.saveCategory(type);
+
         if (t == null) {
-            attributes.addFlashAttribute("message", "操作失败");
+            attributes.addFlashAttribute("message", "Operate successful!");
+        } else {
+            attributes.addFlashAttribute("message", "Operate failed.");
         }
+
         return "redirect:/admin/categories";
     }
 
     @PostMapping("/edit")
-    public String edit(@Validated Type type, BindingResult result) {
-        Type t = categoryService.queryCategoryByName(type.getName());
-        if (t != null) {
-            // if name doesn't change, then do not operate
-            if (!type.getTypeId().equals(t.getTypeId())) {
-                String error = String.format("%s already exist", type.getName());
-                result.rejectValue("name", "nameError", error);
-            }
-            return "admin/add_categories";
+    public String edit(@Valid Type type, RedirectAttributes attributes) {
+        Type compare = categoryService.queryCategoryById(type.getTypeId());
+        // save only if type name changed
+        Type t = null;
+        if (!type.getName().equals(compare.getName())) {
+            t = categoryService.saveCategory(type);
         }
-
-        categoryService.saveCategory(type);
-
+        if (t != null) {
+            attributes.addFlashAttribute("message", "Operate successful!");
+        } else {
+            attributes.addFlashAttribute("message", "Operate failed.");
+        }
         return "redirect:/admin/categories";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-
-        categoryService.deleteCategoryById(id);
+    public String delete(@PathVariable Long id, RedirectAttributes attributes) {
+        if (blogService.countBlogsByTypeId(id)>0) {
+            attributes.addFlashAttribute("errorMessage",
+                    "Please delete the related blogs first.");
+        }
+        else categoryService.deleteCategoryById(id);
 
         return "redirect:/admin/categories";
     }

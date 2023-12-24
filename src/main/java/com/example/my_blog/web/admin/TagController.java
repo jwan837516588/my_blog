@@ -25,7 +25,7 @@ public class TagController {
     private TagService tagService;
 
     @GetMapping
-    public String tag(@PageableDefault(size = 5, sort = {"typeId"}, direction = Sort.Direction.DESC) Pageable pageable, Model model
+    public String tag(@PageableDefault(size = 5, sort = {"tagId"}, direction = Sort.Direction.DESC) Pageable pageable, Model model
     ) {
         model.addAttribute("page", tagService.queryTag(pageable));
         return "admin/tags";
@@ -57,26 +57,20 @@ public class TagController {
         }
 
         Tag t = tagService.saveTag(tag);
-        if (t == null) {
-            attributes.addFlashAttribute("message", "操作失败");
+        if (t != null) {
+            attributes.addFlashAttribute("message", "Operate successful!");
+        } else {
+            attributes.addFlashAttribute("message", "Operate failed.");
         }
         return "redirect:/admin/tags";
     }
 
     @PostMapping("/edit")
-    public String edit(@Validated Tag tag, BindingResult result) {
-        Tag t = tagService.queryTagByName(tag.getName());
-        if (t != null) {
-            // if name doesn't change, then do not operate
-            if (!tag.getTagId().equals(t.getTagId())) {
-                String error = String.format("%s already exist", tag.getName());
-                result.rejectValue("name", "nameError", error);
-            }
-            return "admin/add_tags";
+    public String edit(Tag tag) {
+        Tag compare = tagService.queryTagById(tag.getTagId());
+        if (!tag.getName().equals(compare.getName())) {
+            tagService.saveTag(tag);
         }
-
-        tagService.saveTag(tag);
-
         return "redirect:/admin/tags";
     }
 

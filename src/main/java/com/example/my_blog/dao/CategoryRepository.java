@@ -10,6 +10,6 @@ import java.util.List;
 public interface CategoryRepository extends JpaRepository<Type, Long> {
     Type findByName(String name);
 
-    @Query("select t from Type t join Blog b on t.typeId=b.type.typeId order by b.blogId desc")
+    @Query("select t from Type t join Blog b on t.typeId=b.type.typeId where b.publish order by b.blogId desc")
     List<Type> findTop(Pageable pageable);
 }

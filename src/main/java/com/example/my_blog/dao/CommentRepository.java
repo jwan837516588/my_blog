@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
-public interface CommentRepository extends JpaRepository<Comment, Long>, JpaSpecificationExecutor<Comment> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByBlogBlogId(Long blogId, Sort sort);
+
+    void deleteAllByBlogBlogId(Long blogId);
 }

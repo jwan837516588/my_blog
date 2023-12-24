@@ -39,8 +39,8 @@
 <div class="ui right attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="./post" th:href="@{post}" class="item">New Post</a>
-            <a href="./list" th:href="@{list}" class="item">History</a>
+            <a href="./post" th:href="@{/admin/blog/post}" class="item">New Post</a>
+            <a href="./list" th:href="@{/admin/blog/list}" class="item">History</a>
         </div>
     </div>
 </div>
@@ -50,8 +50,13 @@
     <div class="ui container">
         <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
             <i class="close icon"></i>
-            <div class="header">Successful</div>
+            <div class="header">Feedback:</div>
             <p th:text="${message}">Operation success!</p>
+        </div>
+        <div class="ui error message"  th:unless="${#strings.isEmpty(errorMessage)}">
+            <i class="close icon"></i>
+            <div class="header">Feedback:</div>
+            <p th:text="${errorMessage}">Please delete the related blogs first.</p>
         </div>
         <table class="ui celled table">
             <thead>
@@ -77,12 +82,12 @@
                 <th colspan="3">
                     <a href="#" th:href="@{/admin/categories/input}" class="ui teal basic button">Add</a>
                     <div class="ui small right floated pagination menu" th:if="${page.totalPages}>1">
-                        <a th:href="@{/admin/categories(id=${page.number}-1)}" class="icon item" th:unless="${page.first}">
+                        <a th:href="@{/admin/categories(page=${page.number}-1)}" class="icon item" th:unless="${page.first}">
                             <i class="left chevron icon"></i>
                         </a>
 
 
-                        <a th:href="@{/admin/categories(id=${page.number}+1)}" class="icon item" th:unless="${page.last}">
+                        <a th:href="@{/admin/categories(page=${page.number}+1)}" class="icon item" th:unless="${page.last}">
                             <i class="right chevron icon"></i>
                         </a>
                     </div>
@@ -156,6 +161,12 @@
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
 
 <script>
+    $('.message .close').on('click', function () {
+            $(this).closest('.message')
+                .transition('fade');
+        }
+    );
+
     $('.menu.toggle').click(function () {
             $('.m-item').toggleClass('m-mobile-hide');
         }

@@ -13,13 +13,10 @@ public interface CategoryService {
     @Transactional
     void deleteCategoryById(Long id);
 
-    Type queryCategory(Type type);
     Type queryCategoryById(Long typeId);
     Page<Type> queryCategory(Pageable pageableType);
 
     long countCategory(Type type);
-
-    Type queryCategoryByName(String name);
 
     List<Type> findAllCategories();
 

@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface CommentService {
     List<Comment> queryCommentByBlogId(Long blogId);
-    Comment saveComment(Comment comment);
+    void saveComment(Comment comment);
+
+    void deleteCommentsByBlogId(Long blogId);
 }

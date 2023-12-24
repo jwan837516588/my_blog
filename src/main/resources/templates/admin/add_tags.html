@@ -42,7 +42,7 @@
 <div class="ui right attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="./post" th:href="@{post}" class="item">New Post</a>
+            <a href="./post" th:href="@{/admin/blog/post}" class="item">New Post</a>
             <a href="./list" th:href="@{list}" class="item">History</a>
         </div>
     </div>
@@ -70,7 +70,7 @@
 
             <div class="ui error message"></div>
 
-<!--            /*/
+            <!--/*/
             <div class="ui negative message" th:if="${#fields.hasErrors('name')}">
                 <i class="close icon"></i>
                 <div class="header">Operation Failed</div>
@@ -145,6 +145,12 @@
 <script src="../../static/lib/editor_md/editormd.min.js" th:src="@{/lib/editor_md/editormd.min.js}"></script>
 
 <script>
+    $('.message .close').on('click', function () {
+            $(this).closest('.message')
+                .transition('fade');
+        }
+    );
+
     $('.menu.toggle').click(function () {
             $('.m-item').toggleClass('m-mobile-hide');
         }

@@ -18,7 +18,7 @@ public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentRepository commentRepository;
 
-    private List<Comment> tempComments = new ArrayList<>();
+    private List<Comment> commentCache = new ArrayList<>();
 
     @Override
     public List<Comment> queryCommentByBlogId(Long blogId) {
@@ -44,16 +44,16 @@ public class CommentServiceImpl implements CommentService {
             for (Comment reply : replies) {
                 doRecursion(reply);
             }
-            comment.setComments(tempComments);
-            tempComments = new ArrayList<>();
+            comment.setComments(commentCache);
+            commentCache = new ArrayList<>();
         }
     }
 
     private void doRecursion(Comment reply) {
-        tempComments.add(reply);
+        commentCache.add(reply);
         List<Comment> comments = reply.getComments();
         for (Comment comment : comments) {
-            tempComments.add(comment);
+            commentCache.add(comment);
             if (!comment.getComments().isEmpty()) {
                 doRecursion(comment);
             }
@@ -62,7 +62,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public Comment saveComment(Comment comment) {
+    public void saveComment(Comment comment) {
         // default value -1 is assigned from the front-end
         long parentCommentId = comment.getpComment().getCommentId();
         // find parent comment, if id exist, then set found one to pComment, otherwise set null.
@@ -70,6 +70,12 @@ public class CommentServiceImpl implements CommentService {
 
         comment.setCreateTime(new Date());
 
-        return commentRepository.save(comment);
+        commentRepository.save(comment);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCommentsByBlogId(Long blogId) {
+        commentRepository.deleteAllByBlogBlogId(blogId);
     }
 }

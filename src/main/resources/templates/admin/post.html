@@ -110,6 +110,19 @@
                     </div>
                 </div>
             </div>
+
+            <div class="required field">
+                <div class="ui segments">
+                    <div class="ui bottom attached segment">
+                        <div class="ui teal small header">Summary</div>
+                    </div>
+                    <div class="ui top attached teal segment">
+                        <textarea name="description" th:text="*{description}"
+                                  placeholder="please provide a summary of your blog here..." maxlength="100"></textarea>
+                    </div>
+                </div>
+            </div>
+
             <div class="required field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">Profile</label>
@@ -155,7 +168,7 @@
             <br>
             <br>
             <div class="ui center aligned container">
-                <button type="button" class="ui button" onclick="window.history.go(-1)">Redo</button>
+                <button type="button" class="ui button" onclick="window.history.go(-1)">Back</button>
                 <button id="save_btn" type="button" class="ui secondary button">Save</button>
                 <button id="publish_btn" type="button" class="ui teal button">Submit</button>
             </div>
@@ -260,7 +273,15 @@
                     identifier: 'profile',
                     rules: [{
                         type: 'empty',
-                        prompt: 'profile cannot be empty.'
+                        prompt: 'Profile cannot be empty.'
+                    }],
+
+                },
+                description: {
+                    identifier: 'description',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Description cannot be empty.'
                     }],
 
                 },
@@ -268,7 +289,7 @@
                     identifier: 'flag',
                     rules: [{
                         type: 'empty',
-                        prompt: 'flag cannot be empty.'
+                        prompt: 'Compose type cannot be empty.'
                     }],
 
                 }

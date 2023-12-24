@@ -576,7 +576,7 @@ h5,h6{font-size:1em;}
                                         <a class="author">
                                             <span th:text="${reply.nickname}">Matt</span>
                                             <div class="ui mini basic teal left pointing label m-padded-mini"
-                                                 th:if="${comment.adminComment}">Author
+                                                 th:if="${reply.adminComment}">Author
                                             </div>
                                             &nbsp
                                             <span th:text="|@ ${reply.pComment.nickname}|"
