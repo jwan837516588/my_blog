@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
     <link rel="stylesheet" href="../static/lib/prismjs/prism.css" th:href="@{/lib/prismjs/prism.css}">
     <link rel="stylesheet" href="../static/lib/toc/tocbot.css" th:href="@{/lib/toc/tocbot.css}">
+    <link rel="icon" href="../static/images/earth-in-a-glass-jar-svgrepo-com.svg" th:href="@{/images/earth-in-a-glass-jar-svgrepo-com.svg}" type ="image/x-icon">
 </head>
 
 <body>
@@ -59,7 +60,7 @@
             </div>
         </div>
         <div class="ui attached padded segment">
-            <img src="https://unsplash.it/800/450?image=1005" th:src="@{${blog.profile}}" alt=""
+            <img src="https://unsplash.it/800/450?image=1005" th:src="@{${'/image/display/'+blog.blogId}}" alt=""
                  class="ui fluid rounded image">
         </div>
         <div class="ui attached segment">

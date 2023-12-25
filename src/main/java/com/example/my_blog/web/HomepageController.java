@@ -1,6 +1,7 @@
 package com.example.my_blog.web;
 
 
+import com.example.my_blog.LatestOrRecommendEnum;
 import com.example.my_blog.service.BlogService;
 import com.example.my_blog.service.CategoryService;
 import com.example.my_blog.service.TagService;
@@ -29,7 +30,8 @@ public class HomepageController {
         model.addAttribute("page", blogService.queryBlogs(pageable));
         model.addAttribute("types", categoryService.queryTop(6));
         model.addAttribute("tags", tagService.queryTop(10));
-        model.addAttribute("recommendBlogs", blogService.queryTopRecommend(8));
+        model.addAttribute("recommendBlogs",
+                blogService.queryTopBlogs(LatestOrRecommendEnum.RECOMMEND.getType(), 8));
         return "index";
     }
 
@@ -49,7 +51,8 @@ public class HomepageController {
 
     @GetMapping("/footer/story")
     public String latestBlog(Model model) {
-        model.addAttribute("latestBlogs", blogService.queryTopRecommend(3));
+        model.addAttribute("latestBlogs",
+                blogService.queryTopBlogs(LatestOrRecommendEnum.Latest.getType(), 3));
         return "_fragments :: blogList";
     }
 }

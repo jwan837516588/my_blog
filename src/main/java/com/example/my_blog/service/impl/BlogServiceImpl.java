@@ -1,5 +1,6 @@
 package com.example.my_blog.service.impl;
 
+import com.example.my_blog.LatestOrRecommendEnum;
 import com.example.my_blog.coustom_exception.NotFoundException;
 import com.example.my_blog.dao.BlogRepository;
 import com.example.my_blog.entity.Blog;
@@ -90,10 +91,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> queryTopRecommend(Integer top) {
+    public List<Blog> queryTopBlogs(int type, Integer top) {
         Pageable pageable = PageRequest.of(0, top,
                 Sort.by(Sort.Direction.DESC, "updateTime"));
-        return blogRepository.queryTopRecommend(pageable);
+        return type == LatestOrRecommendEnum.Latest.getType() ?
+                blogRepository.queryLatestPublished(pageable) :
+                blogRepository.queryTopRecommend(pageable);
     }
 
     @Override

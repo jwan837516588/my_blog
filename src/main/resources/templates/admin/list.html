@@ -7,6 +7,8 @@
     <title>List</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="icon" href="../../static/images/earth-in-a-glass-jar-svgrepo-com.svg"
+          th:href="@{/images/computer-html-svgrepo-com.svg}" type="image/x-icon">
 </head>
 
 <body>
@@ -220,14 +222,18 @@
         loadData();
     }
 
-    $("#search-btn").click(function () {
-        $("[name='page']").val(0);
-        loadData();
-    });
+    $(document).ready(function () {
+        // 监听复选框状态变化事件
+        $('#isRecommend, #search-btn').on('change click', function () {
+            performSearch();
+        });
 
-    // $("#delete_btn").click(function () {
-    //     alert("Do you want to delete?")
-    // });
+        // 模拟搜索功能的函数
+        function performSearch() {
+            $("[name='page']").val(0);
+            loadData();
+        }
+    });
 
     function loadData() {
         $("#table-container").load(/*[[@{/admin/blog/list/search}]]*/"/admin/blog/list/search", {
@@ -237,6 +243,7 @@
             page: $("[name='page']").val()
         });
     }
+
     $('#latestBlog-container').load(/*[[@{/footer/story}]]*/"/footer/story")
 
 </script>

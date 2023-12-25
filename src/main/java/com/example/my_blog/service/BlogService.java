@@ -19,7 +19,7 @@ public interface BlogService {
 
     Page<Blog> queryBlogs(Pageable pageable);
 
-    List<Blog> queryTopRecommend(Integer top);
+    List<Blog> queryTopBlogs(int type, Integer top);
 
     Page<Blog> queryBlogs(String query, Pageable pageable);
 

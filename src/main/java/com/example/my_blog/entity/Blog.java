@@ -1,6 +1,8 @@
 package com.example.my_blog.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,11 +15,16 @@ public class Blog {
     @Id
     @GeneratedValue
     private Long blogId;
+    @NotBlank(message = "Title cannot be empty.")
     private String title;
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="TEXT")
+    @NotBlank(message = "Content cannot be empty.")
     private String content;
-    private String profile;
+    @Lob
+    @Column(length = Integer.MAX_VALUE)
+    private byte[] profile;
+    @NotBlank(message = "Flag cannot be empty.")
     private String flag;
     private Integer numOfViews;
     private boolean donationSwitch;
@@ -29,7 +36,11 @@ public class Blog {
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
+    @NotBlank(message = "Description cannot be empty.")
     private String description;
+
+    @Transient
+    private MultipartFile file;
 
     @ManyToOne
     private Type type;
@@ -55,7 +66,7 @@ public class Blog {
         this.blogId = blogId;
     }
 
-    public Blog(Long blogId, String title, String content, String profile, String flag, Integer numOfViews, boolean donationSwitch, boolean copyrightSwitch, boolean commentSwitch, boolean publish, boolean recommendSwitch, Date createTime, Date updateTime, String description, Type type, User user, String tagIds, List<Tag> tags, List<Comment> comments) {
+    public Blog(Long blogId, String title, String content, byte[] profile, String flag, Integer numOfViews, boolean donationSwitch, boolean copyrightSwitch, boolean commentSwitch, boolean publish, boolean recommendSwitch, Date createTime, Date updateTime, String description, Type type, User user, String tagIds, List<Tag> tags, List<Comment> comments) {
         this.blogId = blogId;
         this.title = title;
         this.content = content;
@@ -101,12 +112,20 @@ public class Blog {
         this.content = content;
     }
 
-    public String getProfile() {
+    public byte[] getProfile() {
         return profile;
     }
 
-    public void setProfile(String profile) {
+    public void setProfile(byte[] profile) {
         this.profile = profile;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     public String getFlag() {

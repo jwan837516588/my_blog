@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
     <link rel="stylesheet" href="../../static/lib/editor_md/css/editormd.min.css"
           th:href="@{/lib/editor_md/css/editormd.min.css}">
+    <link rel="icon" href="../../static/images/earth-in-a-glass-jar-svgrepo-com.svg" th:href="@{/images/computer-html-svgrepo-com.svg}" type ="image/x-icon">
 </head>
 
 <body>
@@ -50,7 +51,8 @@
 <!--body-->
 <div class=".m-container m-padded-tb-big">
     <div class="ui container">
-        <form id="blog_form" action="#" th:object="${blog}" th:action="@{/admin/blog/post}" method="post"
+        <form id="blog_form" action="#" th:object="${blog}" th:action="@{/admin/blog/post}"
+              th:enctype="'multipart/form-data'" method="post"
               class="ui form">
             <input type="hidden" name="publish">
             <input type="hidden" name="blogId" th:value="*{blogId}">
@@ -118,15 +120,17 @@
                     </div>
                     <div class="ui top attached teal segment">
                         <textarea name="description" th:text="*{description}"
-                                  placeholder="please provide a summary of your blog here..." maxlength="100"></textarea>
+                                  placeholder="please provide a summary of your blog here..."
+                                  maxlength="100"></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="required field">
-                <div class="ui left labeled input">
-                    <label class="ui teal basic label">Profile</label>
-                    <input type="text" name="profile" th:value="*{profile}" placeholder="Profile URL">
+                <div class="ui left labeled action input">
+                    <label class="ui teal basic label">Image</label>
+                    <input type="file" th:value="*{profile}" class="ui input" placeholder="Profile URL" name="file"
+                           required="required">
                 </div>
             </div>
             <div class="inline fields">

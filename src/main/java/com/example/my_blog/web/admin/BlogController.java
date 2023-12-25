@@ -9,11 +9,18 @@ import com.example.my_blog.service.BlogService;
 import com.example.my_blog.service.CategoryService;
 import com.example.my_blog.service.TagService;
 import com.example.my_blog.utils.CastUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +29,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -37,6 +48,10 @@ public class BlogController {
     @Autowired
     private TagService tagService;
 
+    @Value("${uploadDir}")
+    private String uploadFolder;
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/list")
     public String listPage(@PageableDefault(size = 5, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
@@ -87,19 +102,54 @@ public class BlogController {
     }
 
     @PostMapping("/post")
-    public String writeBlog(Blog blog, RedirectAttributes attributes, HttpSession httpSession) {
+    public String writeBlog(@Valid Blog blog, RedirectAttributes attributes, HttpSession httpSession, HttpServletRequest request, Model model) {
         // query types by given type ids
         blog.setUser((User) httpSession.getAttribute("user"));
         Type type = categoryService.queryCategoryById(blog.getType().getTypeId());
+        // save type
         blog.setType(type);
         // query tags by given tag ids
         List<Long> tagIds = CastUtils.convertStringToLongList(blog.getTagIds());
         List<Tag> tags = tagIds != null ? tagService.queryBatchTagsByIds(tagIds) : null;
+        // save tags
         blog.setTags(tags);
+
+        // save profile image.
+        try {
+            //String uploadDirectory = System.getProperty("user.dir") + uploadFolder;
+            String uploadDirectory = request.getServletContext().getRealPath(uploadFolder);
+            log.info("uploadDirectory:: " + uploadDirectory);
+            String fileName = blog.getFile().getOriginalFilename();
+            String filePath = Paths.get(uploadDirectory, fileName).toString();
+            log.info("FileName: " + blog.getFile().getOriginalFilename());
+            if (fileName == null || fileName.contains("..")) {
+                model.addAttribute("invalid", "Sorry! Filename contains invalid path sequence \" + fileName");
+            }
+            try {
+                File dir = new File(uploadDirectory);
+                if (!dir.exists()) {
+                    log.info("Folder Created");
+                    dir.mkdirs();
+                }
+                // Save the file locally
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filePath)));
+                stream.write(blog.getFile().getBytes());
+                stream.close();
+            } catch (Exception e) {
+                log.info("in catch");
+                e.printStackTrace();
+            }
+            blog.setProfile(blog.getFile().getBytes());
+            log.info("HttpStatus===" + new ResponseEntity<>(HttpStatus.OK));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("Exception: " + e);
+        }
+
         // save new blog
         Blog b = blogService.saveBlog(blog);
         if (b == null) {
-            attributes.addFlashAttribute("message", "操作失败");
+            attributes.addFlashAttribute("message", "Operation failed.");
         }
         return "redirect:/admin/blog/list";
     }

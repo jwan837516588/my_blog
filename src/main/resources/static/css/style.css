@@ -3,6 +3,16 @@ body {
     background: url('../images/sports.png');
 }
 
+#navbar {
+    position: -webkit-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+
+
 /* padded */
 .m-padded-small {
     padding: 0.4em !important;

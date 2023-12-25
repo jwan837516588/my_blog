@@ -7,250 +7,274 @@
     <title>Homepage</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap.min.css">
+    <link rel="icon" href="../static/images/earth-in-a-glass-jar-svgrepo-com.svg" th:href="@{/images/earth-in-a-glass-jar-svgrepo-com.svg}" type ="image/x-icon">
 </head>
 
 <body>
 
-    <!--navigator-->
-    <nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow">
-        <div class="ui container">
-            <div class="ui inverted secondary stackable menu">
-                <h2 class="ui teal header item">Blog</h2>
-                <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>Dashboard</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>Category</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tag</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>Filing</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>About Me</a>
-                <div class="m-item right item m-mobile-hide">
-                    <div class="ui inverted transparent input">
-                        <input type="text" placeholder="Search...">
-                        <i class="search link icon"></i>
-                    </div>
+<!--navigator-->
+<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">Blog</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>Dashboard</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>Category</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>Tag</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>Filing</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>About Me</a>
+            <div class="m-item right item m-mobile-hide">
+                <div class="ui inverted transparent input">
+                    <input type="text" placeholder="Search...">
+                    <i class="search link icon"></i>
                 </div>
             </div>
         </div>
-        <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
-            <i class="sidebar icon"></i>
-        </a>
-    </nav>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
 
-    <!--body-->
-    <div class=".m-container m-padded-tb-big">
-        <div class="ui container">
-            <div class="ui stackable grid">
-                <!-- left side -->
-                <div class="eleven wide column">
-                    <!-- header -->
-                    <div class="ui top attached segment">
-                        <div class="ui middle aligned two column grid">
-                            <div class="column">
-                                <h3 class="ui teal header">Blog</h3>
-                            </div>
-                            <div class="right aligned column m-opacity">
-                                <h3 class="ui orange header m-inline-block m-thin-text" th:text="${page.totalElements}">
-                                    4
-                                </h3>
-                                &nbsp;posts in total
-                            </div>
+<!--body-->
+<div id="blog-content" class=".m-container m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <!-- left side -->
+            <div class="eleven wide column">
+                <!-- header -->
+                <div class="ui top attached segment">
+                    <div class="ui middle aligned two column grid">
+                        <div class="column">
+                            <h3 class="ui teal header">Blog</h3>
                         </div>
-                    </div>
-                    <!-- body -->
-                    <div class="ui attached segment">
-
-                        <div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.content}" th:if="${blog.publish}">
-                            <div class="ui mobile reversed stackable grid">
-                                <div class="eleven wide column">
-                                    <h3 class="ui header"><a href="#" class="m-black" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank">心灵鸡汤</a></h3>
-                                    <p class="m-thin-text m-text-space m-text-line-height" th:text="|${blog.description}......|">
-                                        在生命的舞台上，每一天都是一次珍贵的表演。忘记昨日的烦恼，抬头望向明天的阳光。像向阳植物一样，让心灵在阳光下舒展。不必追逐繁星，拥抱内心的宁静。生活如诗，平凡中蕴含着美好。每一刻都是收获，每一步都是成长。相信自己，勇敢前行，因为你的内心是最美的风景。
-                                    </p>
-                                    <div class="ui stackable grid">
-                                        <div class="eleven wide column">
-                                            <div class="ui mini horizontal link list">
-                                                <div class="item">
-                                                    <img src="https://unsplash.it/100/100?image=1005" alt=""
-                                                        class="ui avatar image" th:src="@{${blog.user.photo}}">
-                                                    <div class="content"><a href="#" class="header" th:text="${blog.user.nickname}">wjr</a></div>
-                                                </div>
-                                                <div class="item">
-                                                    <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2023-11-29</span>
-                                                </div>
-                                                <div class="item">
-                                                    <i class="eye icon"></i><span th:text="${blog.numOfViews}">1000</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="right aligned five wide column">
-                                            <a href="#" th:href="@{/category/{id}(id=${blog.type.typeId})}" target="_blank"
-                                                class="ui teal basic label m-padded-tiny m-thin-text" th:text="${blog.type.name}">认知升级</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="five wide column">
-                                    <a href="#" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank">
-                                        <img src="https://unsplash.it/1000/500?image=1005" th:src="@{${blog.profile}}" alt=""
-                                            class="ui rounded image">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- bottom -->
-                    <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
-                        <div class="ui middle aligned two column grid">
-                            <div class="column">
-                                <a href="#" th:href="@{/(page=${page.number}-1)}"
-                                   class="ui teal basic button" th:unless="${page.first}">Previous</a>
-                            </div>
-                            <div class="right aligned column">
-                                <a href="#" th:href="@{/(page=${page.number}+1)}"
-                                   th:unless="${page.last}" class="ui teal basic button">Next</a>
-                            </div>
+                        <div class="right aligned column m-opacity">
+                            <h3 class="ui orange header m-inline-block m-thin-text" th:text="${page.totalElements}">
+                                4
+                            </h3>
+                            &nbsp;posts in total
                         </div>
                     </div>
                 </div>
-                <!-- right side -->
-                <!-- top -->
-                <div class="five wide column">
-                    <div class="ui segments">
-                        <div class="ui secondary segment">
-                            <div class="ui two column grid">
-                                <div class="column">
-                                    <i class="idea icon"></i> Categories
-                                </div>
-                                <div class="right aligned column">
-                                    <a href="#" th:href="@{/category/-1}" target="_blank">more <i class="angle double right icon"></i></a>
+                <!-- body -->
+                <div class="ui attached segment">
+
+                    <div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.content}"
+                         th:if="${blog.publish}">
+                        <div class="ui mobile reversed stackable grid">
+                            <div class="eleven wide column">
+                                <h3 class="ui header"><a href="#" class="m-black" th:text="${blog.title}"
+                                                         th:href="@{/blog/{id}(id=${blog.blogId})}"
+                                                         target="_blank">心灵鸡汤</a></h3>
+                                <p class="m-thin-text m-text-space m-text-line-height"
+                                   th:text="|${blog.description}......|">
+                                    在生命的舞台上，每一天都是一次珍贵的表演。忘记昨日的烦恼，抬头望向明天的阳光。像向阳植物一样，让心灵在阳光下舒展。不必追逐繁星，拥抱内心的宁静。生活如诗，平凡中蕴含着美好。每一刻都是收获，每一步都是成长。相信自己，勇敢前行，因为你的内心是最美的风景。
+                                </p>
+                                <div class="ui stackable grid">
+                                    <div class="eleven wide column">
+                                        <div class="ui mini horizontal link list">
+                                            <div class="item">
+                                                <img src="https://unsplash.it/100/100?image=1005" alt=""
+                                                     class="ui avatar image" th:src="@{${blog.user.photo}}">
+                                                <div class="content"><a href="#" class="header"
+                                                                        th:text="${blog.user.nickname}">wjr</a></div>
+                                            </div>
+                                            <div class="item">
+                                                <i class="calendar icon"></i><span
+                                                    th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2023-11-29</span>
+                                            </div>
+                                            <div class="item">
+                                                <i class="eye icon"></i><span th:text="${blog.numOfViews}">1000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="right aligned five wide column">
+                                        <a href="#" th:href="@{/category/{id}(id=${blog.type.typeId})}" target="_blank"
+                                           class="ui teal basic label m-padded-tiny m-thin-text"
+                                           th:text="${blog.type.name}">认知升级</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="ui teal segment">
-                            <div class="ui fluid vertical menu" th:if="${#arrays.length(types)}>0">
-                                <a href="#" th:href="@{/category/{id}(id=${type.typeId})}" target="_blank" class="item" th:each="type : ${types}">
-                                    <span th:text="${type.name}">学习日志</span>
-                                    <div class="ui teal basic left pointing label" th:text="${#arrays.length(type.blogs)}">13</div>
+                            <div class="five wide column">
+                                <a href="#" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank">
+                                    <img src="https://unsplash.it/1000/500?image=1005"
+                                         th:src="@{${'/image/display/'+ blog.blogId}}" class="ui rounded image"
+                                         style="width:300px" alt=""/>
+                                    <!--<img src="https://unsplash.it/1000/500?image=1005" th:src="@{${blog.profile}}"
+                                         alt=""
+                                         class="ui rounded image">-->
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <!-- label -->
-                    <div class="ui segments">
-                        <div class="ui secondary segment">
-                            <div class="ui two column grid">
-                                <div class="column">
-                                    <i class="tags icon"></i> Tags
-                                </div>
-                                <div class="right aligned column">
-                                    <a href="#" th:href="@{/tag/-1}" target="_blank">more <i class="angle double right icon"></i></a>
-                                </div>
+                </div>
+
+                <!-- bottom -->
+                <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
+                    <div class="ui middle aligned two column grid">
+                        <div class="column">
+                            <a href="#" th:href="@{/(page=${page.number}-1)}"
+                               class="ui teal basic button" th:unless="${page.first}">Previous</a>
+                        </div>
+                        <div class="right aligned column">
+                            <a href="#" th:href="@{/(page=${page.number}+1)}"
+                               th:unless="${page.last}" class="ui teal basic button">Next</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- right side -->
+            <!-- top -->
+            <div class="five wide column">
+                <div class="ui segments">
+                    <div class="ui secondary segment">
+                        <div class="ui two column grid">
+                            <div class="column">
+                                <i class="idea icon"></i> Categories
+                            </div>
+                            <div class="right aligned column">
+                                <a href="#" th:href="@{/category/-1}" target="_blank">more <i
+                                        class="angle double right icon"></i></a>
                             </div>
                         </div>
-                        <div class="ui teal segment">
-                            <a href="#" th:href="@{/tag/{id}(id=${tag.tagId})}"
-                               target="_blank" class="ui teal basic left pointing label m-margin-tiny"
-                               th:each="tag : ${tags}">
-                                <span th:text="${tag.name}">Java</span>
-                                <div class="detail" th:text="${#arrays.length(tag.blogs)}">3</div>
+                    </div>
+                    <div class="ui teal segment">
+                        <div class="ui fluid vertical menu" th:if="${#arrays.length(types)}>0">
+                            <a href="#" th:href="@{/category/{id}(id=${type.typeId})}" target="_blank" class="item"
+                               th:each="type : ${types}">
+                                <span th:text="${type.name}">学习日志</span>
+                                <div class="ui teal basic left pointing label" th:text="${#arrays.length(type.blogs)}">
+                                    13
+                                </div>
                             </a>
                         </div>
                     </div>
-                    <!-- recommend -->
-                    <div class="ui segments">
-                        <div class="ui secondary segment">
-                            <i class="bookmark icon"></i> Latest Blog Recommendations
-                        </div>
-
-                        <div class="ui segment" th:each="blog : ${recommendBlogs}">
-                            <a href="#" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank" class="m-black m-thin-text"
-                               th:text="${blog.title}">User Story</a>
+                </div>
+                <!-- label -->
+                <div class="ui segments">
+                    <div class="ui secondary segment">
+                        <div class="ui two column grid">
+                            <div class="column">
+                                <i class="tags icon"></i> Tags
+                            </div>
+                            <div class="right aligned column">
+                                <a href="#" th:href="@{/tag/-1}" target="_blank">more <i
+                                        class="angle double right icon"></i></a>
+                            </div>
                         </div>
                     </div>
+                    <div class="ui teal segment">
+                        <a href="#" th:href="@{/tag/{id}(id=${tag.tagId})}"
+                           target="_blank" class="ui teal basic left pointing label m-margin-tiny"
+                           th:each="tag : ${tags}">
+                            <span th:text="${tag.name}">Java</span>
+                            <div class="detail" th:text="${#arrays.length(tag.blogs)}">3</div>
+                        </a>
+                    </div>
+                </div>
+                <!-- recommend -->
+                <div class="ui segments">
+                    <div class="ui secondary segment">
+                        <i class="bookmark icon"></i> Latest Blog Recommendations
+                    </div>
 
-                    <!-- QR code -->
-                    <div class="ui horizontal divider header m-margin-top-large">My Wechat</div>
-                    <div class="ui centered card" style="width: 11em">
-                        <img src="../static/images/my_wehcat_white.jpg" th:src="@{/images/my_wehcat_white.jpg}" class="ui rounded image" alt="My WeChat">
+                    <div class="ui segment" th:each="blog : ${recommendBlogs}">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.blogId})}" target="_blank"
+                           class="m-black m-thin-text"
+                           th:text="${blog.title}">User Story</a>
                     </div>
                 </div>
 
+                <!-- QR code -->
+                <div class="ui horizontal divider header m-margin-top-large">My Wechat</div>
+                <div class="ui centered card" style="width: 11em">
+                    <img src="../static/images/my_wehcat_white.jpg" th:src="@{/images/my_wehcat_white.jpg}"
+                         class="ui rounded image" alt="My WeChat">
+                </div>
             </div>
-        </div>
-        <div th:if="${page.totalElements}<1">
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+
         </div>
     </div>
+    <div th:if="${page.totalElements}<1">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+</div>
 
-    <!--footer-->
-    <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
-        <div class="ui center aligned container">
-            <div class="ui inverted divided stackable grid">
-                <div class="three wide column">
-                    <div class="ui inverted link list">
-                        <div class="item">
-                            <img src="../static/images/my_wechat.jpg" th:src="@{/images/my_wechat.jpg}" class="ui rounded image" alt="My WeChat"
-                                style="width: 110px;">
-                        </div>
+<!--footer-->
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/images/my_wechat.jpg" th:src="@{/images/my_wechat.jpg}"
+                             class="ui rounded image" alt="My WeChat"
+                             style="width: 110px;">
                     </div>
-                </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header m-thin-text m-text-space">
-                        Latest Blog Recommendations
-                    </h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">User Story</a>
-                        <a href="#" class="item">User Story</a>
-                        <a href="#" class="item">User Story</a>
-                    </div>
-                </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header m-thin-text m-text-space">
-                        Contact Info
-                    </h4>
-                    <div class="ui inverted link list">
-                        <i class="item bordered linkedin icon">&nbsp;LinkedIn:&nbsp;</i>
-                        <a href="#" class="item">
-                            linkedin.com/in/jared-wang-b88474270
-                        </a>
-                        <i class="item bordered envelope icon">&nbsp;Email:&nbsp;</i>
-                        <a href="#" class="item">
-                            jwan308@aucklanduni.ac.nz
-                        </a>
-                    </div>
-                </div>
-                <div class="seven wide column">
-                    <h4 class="ui inverted header m-thin-text m-text-space">
-                        Me
-                    </h4>
-                    <p class="m-thin-text m-text-space m-text-line-height m-opacity">This is my blog</p>
                 </div>
             </div>
-            <div class="ui inverted section divider">
-                <p class="m-thin-text m-text-space m-text-line-height m-opacity">
-                    Copyright © 2023 Jared Wang. All rights reserved.
-                </p>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-thin-text m-text-space">
+                    Latest Blog Recommendations
+                </h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">User Story</a>
+                    <a href="#" class="item">User Story</a>
+                    <a href="#" class="item">User Story</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-thin-text m-text-space">
+                    Contact Info
+                </h4>
+                <div class="ui inverted link list">
+                    <i class="item bordered linkedin icon">&nbsp;LinkedIn:&nbsp;</i>
+                    <a href="#" class="item">
+                        linkedin.com/in/jared-wang-b88474270
+                    </a>
+                    <i class="item bordered envelope icon">&nbsp;Email:&nbsp;</i>
+                    <a href="#" class="item">
+                        jwan308@aucklanduni.ac.nz
+                    </a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-thin-text m-text-space">
+                    Me
+                </h4>
+                <p class="m-thin-text m-text-space m-text-line-height m-opacity">This is my blog</p>
             </div>
         </div>
-    </footer>
+        <div class="ui inverted section divider">
+            <p class="m-thin-text m-text-space m-text-line-height m-opacity">
+                Copyright © 2023 Jared Wang. All rights reserved.
+            </p>
+        </div>
+    </div>
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
 
-    <script>
-        $('.menu.toggle').click(function () {
+<script type="text/javascript">
+
+
+    $('.menu.toggle').click(function () {
             $('.m-item').toggleClass('m-mobile-hide');
         }
-        );
-        $('#latestBlog-container').load(/*[[@{/footer/story}]]*/"/footer/story")
+    );
 
-    </script>
+    $('#latestBlog-container').load(/*[[@{/footer/story}]]*/"/footer/story")
+
+</script>
 </body>
 
 </html>
