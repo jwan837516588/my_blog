@@ -1,7 +1,7 @@
 package com.example.my_blog.web;
 
 
-import com.example.my_blog.LatestOrRecommendEnum;
+import com.example.my_blog.enums.LatestOrRecommendEnum;
 import com.example.my_blog.service.BlogService;
 import com.example.my_blog.service.CategoryService;
 import com.example.my_blog.service.TagService;

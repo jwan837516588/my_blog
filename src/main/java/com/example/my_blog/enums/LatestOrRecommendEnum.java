@@ -1,4 +1,4 @@
-package com.example.my_blog;
+package com.example.my_blog.enums;
 
 public enum LatestOrRecommendEnum {
     Latest(0, "latest"), RECOMMEND(1, "recommend");

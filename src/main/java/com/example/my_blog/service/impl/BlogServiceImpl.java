@@ -1,6 +1,6 @@
 package com.example.my_blog.service.impl;
 
-import com.example.my_blog.LatestOrRecommendEnum;
+import com.example.my_blog.enums.LatestOrRecommendEnum;
 import com.example.my_blog.coustom_exception.NotFoundException;
 import com.example.my_blog.dao.BlogRepository;
 import com.example.my_blog.entity.Blog;

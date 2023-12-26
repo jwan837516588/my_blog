@@ -22,6 +22,7 @@
             <a href="#" th:href="@{/admin/blog/list}" class="m-item item m-mobile-hide" th:classappend="${n==0} ? 'active'"><i class="home icon"></i>Dashboard</a>
             <a href="#" th:href="@{/admin/categories}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="idea icon"></i>Categories</a>
             <a href="#" th:href="@{/admin/tags}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="tags icon"></i>Tags</a>
+            <a href="#" th:href="@{/admin/biography}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="info icon"></i>About Me</a>
             <div class="m-item right item m-mobile-hide">
                 <div class="ui inverted transparent input">
                     <input type="text" placeholder="Search...">
@@ -74,10 +75,7 @@
                 </div>
             </div>
             <div class="seven wide column">
-                <h4 class="ui inverted header m-thin-text m-text-space">
-                    Me
-                </h4>
-                <p class="m-thin-text m-text-space m-text-line-height m-opacity">This is my blog</p>
+                <p class="m-thin-text m-text-space m-text-line-height m-opacity">The good programmers are those who can understand computers,<br> while the great programmers are those who can understand humans.</p>
             </div>
         </div>
         <div class="ui inverted section divider">

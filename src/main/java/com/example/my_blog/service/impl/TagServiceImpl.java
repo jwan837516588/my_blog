@@ -97,4 +97,9 @@ public class TagServiceImpl implements TagService {
         content.removeIf(e -> CollectionUtils.isEmpty(e.getBlogs()));
         return content;
     }
+
+    @Override
+    public List<Tag> queryAllTags() {
+        return tagRepository.findAll();
+    }
 }

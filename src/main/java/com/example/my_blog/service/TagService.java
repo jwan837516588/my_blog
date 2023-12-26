@@ -25,4 +25,6 @@ public interface TagService {
     List<Tag> findAllTags();
 
     List<Tag> queryTop(Integer top);
+
+    List<Tag> queryAllTags();
 }
