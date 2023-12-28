@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <!--navigator-->
     <nav th:replace="_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow">
         <div class="ui container">
@@ -58,7 +57,7 @@
             <!-- tags -->
             <div class="ui attached segment" >
                 <a href="#" th:href="@{/tag/{id}(id=${tag.tagId})}"
-                   target="_blank" class="ui basic left pointing large label m-margin-tiny"
+                   class="ui basic left pointing large label m-margin-tiny"
                    th:classappend="${tag.tagId==activeTagId} ? 'teal'" th:each="tag : ${tags}">
                     <span th:text="${tag.name}">方法论</span>
                     <div class="detail" th:text="${#arrays.length(tag.blogs)}">23</div>
@@ -108,7 +107,7 @@
                         </div>
 
                         <div class="five wide column">
-                            <img src="https://unsplash.it/1000/500?image=1005"
+                            <img src="https://picsum.photos/id/473/100/100"
                                  th:src="@{${'/image/display/'+ blog.blogId}}" class="ui rounded image"
                                  style="width:300px" alt=""/>
                         </div>

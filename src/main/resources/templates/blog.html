@@ -45,7 +45,7 @@
         <div class="ui top attached segment">
             <div class="ui mini horizontal link list">
                 <div class="item">
-                    <img src="https://unsplash.it/100/100?image=1005" th:src="@{${blog.user.photo}}" alt=""
+                    <img src="https://unsplash.it/100/100?image=1005" th:src="@{https://picsum.photos/id/473/100/100}" alt=""
                          class="ui avatar image">
                     <div class="content">
                         <a href="#" th:href="@{/me}" th:text="${blog.user.nickname}" class="header">wjr</a>
@@ -495,15 +495,15 @@ h5,h6{font-size:1em;}
                     <div class="ui orange basic label">
                         <div class="ui images" style="font-size: inherit !important;">
                             <div class="image">
-                                <img src="../static/images/my_wehcat_white.jpg"
-                                     th:src="@{/images/my_wehcat_white.jpg}"
+                                <img src="../static/images/wechat_pay.png"
+                                     th:src="@{/images/wechat_pay.png}"
                                      alt="" class="ui rounded bordered image"
                                      style="width: 120px">
                                 <div>WeChat</div>
                             </div>
                             <div class="image">
-                                <img src="../static/images/my_wehcat_white.jpg"
-                                     th:src="@{/images/my_wehcat_white.jpg}"
+                                <img src="../static/images/ali_pay.png"
+                                     th:src="@{/images/ali_pay.png}"
                                      alt="" class="ui rounded bordered image"
                                      style="width: 120px">
                                 <div>AliPay</div>
@@ -547,7 +547,7 @@ h5,h6{font-size:1em;}
                                 <img src="../static/images/guest_photo.jpg" th:src="@{${comment.photo}}">
                             </a>
                             <div class="content">
-                                <a class="author">
+                                <a class="author" th:href="@{/me}">
                                         <span th:text="${comment.nickname}">
                                             Matt
                                         </span>
@@ -574,7 +574,7 @@ h5,h6{font-size:1em;}
                                         <img src="../static/images/guest_photo.jpg" th:src="@{${reply.photo}}">
                                     </a>
                                     <div class="content">
-                                        <a class="author">
+                                        <a class="author" th:href="@{/me}">
                                             <span th:text="${reply.nickname}">Matt</span>
                                             <div class="ui mini basic teal left pointing label m-padded-mini"
                                                  th:if="${reply.adminComment}">Author
